@@ -107,13 +107,15 @@
    
    
      
-     $pic_id = $_GET['pic_id'];
-     $pic_name = $_GET['pic_name'];
+     $txt_id = $_GET['txt_id'];
+     $txt_name = $_GET['txt_name'];
      
 
      // deutero meros emfanish munhmatwn
 
-   $sql="select id, multimedia_name, multimedia_type, multimedia_size, multimedia_data from chat where id ='$pic_id' and multimedia_name = '$pic_name' ";
+   $sql="select id, multimedia_name, multimedia_type, multimedia_size, multimedia_data 
+         from chat 
+         where id ='$txt_id'  and multimedia_name = '$txt_name' ";
    $result=$conn->query($sql);
 
         
@@ -135,25 +137,30 @@
                 {
           
           
-         $photo_name = $row['multimedia_name'];
+         $txt_name = $row['multimedia_name'];
 
-         $photo_type = $row['multimedia_type'];
+         $txt_type = $row['multimedia_type'];
          
-         $photo_size = $row['multimedia_size'];
+         $txt_size = $row['multimedia_size'];
         
-         $photo_data = $row['multimedia_data'];
+         $txt_data = $row['multimedia_data'];
         
         
         
-     $photo_data_view =   '<img src="data:image/jpeg;base64,'. base64_encode($photo_data) .'"  title="'.$photo_name.'" height=80% width=auto />';
+        $text_data_view = $txt_data;
          
-        
     
-            if ($photo_type == "image/jpeg" or $photo_type == "image/jpg" or $photo_type == "image/png" or $photo_type == "image/gif")
+             if ($txt_type == "text/plain")
               {
-             if  ($photo_size > 0)
+             if  ($txt_size > 0)
                    { 
-            echo "<div align='center'> <br>  <font color='black' size='4'> </b> $photo_name </b> </font> <hr> $photo_data_view  </div>";
+                   echo "<div align='center'> <br>
+                           <font size='4'> <b> $txt_name </b> </font> 
+                           <hr>
+                           $text_data_view
+                           <br><br><br>
+                          <span class='glyphicon glyphicon-text-size' style='font-size:75px;'></span>
+                          </div>";
                    }
                 }
                 

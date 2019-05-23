@@ -280,6 +280,15 @@ margin: 35px auto;
 </style>
 
 
+<script>
+function openInNewTab(url) {
+  var win = window.open(url, '_top');
+  win.focus();
+}
+</script>
+
+
+
 </head>
 
 <body>    
@@ -288,13 +297,49 @@ margin: 35px auto;
    <div class="btn-group btn-group-justified">
    
     
-   <div class="btn-group">
-    <button type="button" onclick="location.href='logout.php';" class="btn btn-default btn-lg">
-       <span class="glyphicon glyphicon-log-out"></span>
-      <font size="5">  Log out </font>
-    </button>
-   </div>
+
+<div class="btn-group">
+
+<div class="dropdown">
+    
+  <button class="btn btn-default btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+   	<span class="glyphicon glyphicon-triangle-bottom"></span>
+   	    &nbsp;
+     <font color="grey" size="5"> <b> Settings </b> </font> 
+         &nbsp;
+	<span class="glyphicon glyphicon-triangle-bottom"></span>
+  </button>
+  
+  
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+  
    
+ <button type="button" onclick="openInNewTab('avatar_change.php');"  class="btn btn-default btn-lg dropdown-item"> 
+     	<span class="glyphicon glyphicon-picture"></span>
+     	   &nbsp;
+     <font color="grey" size="5"> <b> Change Avatar </b> </font> 
+          &nbsp;
+    	<span class="glyphicon glyphicon-picture"></span>
+     </button>
+   
+
+
+     <button type="button" onclick="location.href='logout.php';" class="btn btn-default btn-lg dropdown-item">
+         <span class="glyphicon glyphicon-log-out"></span>
+           &nbsp; &nbsp; &nbsp;
+          <font color="grey" size="5"> <b> Log Out </b> </font> 
+         &nbsp; &nbsp; &nbsp;
+        <span class="glyphicon glyphicon-log-out"></span>
+     </button>
+
+   
+
+   </div>
+   </div>
+  </div> 
+
+
+
 
 
    <div class="btn-group">
@@ -333,6 +378,7 @@ margin: 35px auto;
    </div>
    </div>
   </div> 
+
 
 
 
@@ -410,6 +456,12 @@ margin: 35px auto;
 
 </div>
 </div>
+
+
+
+
+
+
  
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

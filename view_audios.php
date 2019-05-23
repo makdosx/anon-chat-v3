@@ -107,13 +107,15 @@
    
    
      
-     $pic_id = $_GET['pic_id'];
-     $pic_name = $_GET['pic_name'];
+     $aud_id = $_GET['aud_id'];
+     $aud_name = $_GET['aud_name'];
      
 
      // deutero meros emfanish munhmatwn
 
-   $sql="select id, multimedia_name, multimedia_type, multimedia_size, multimedia_data from chat where id ='$pic_id' and multimedia_name = '$pic_name' ";
+   $sql="select id, multimedia_name, multimedia_type, multimedia_size, multimedia_data 
+         from chat 
+         where id ='$aud_id'  and multimedia_name = '$aud_name' ";
    $result=$conn->query($sql);
 
         
@@ -135,25 +137,32 @@
                 {
           
           
-         $photo_name = $row['multimedia_name'];
+         $audio_name = $row['multimedia_name'];
 
-         $photo_type = $row['multimedia_type'];
+         $audio_type = $row['multimedia_type'];
          
-         $photo_size = $row['multimedia_size'];
+         $audio_size = $row['multimedia_size'];
         
-         $photo_data = $row['multimedia_data'];
+         $audio_data = $row['multimedia_data'];
         
         
         
-     $photo_data_view =   '<img src="data:image/jpeg;base64,'. base64_encode($photo_data) .'"  title="'.$photo_name.'" height=80% width=auto />';
+        $audio_data_view = '<audio controls  src="data:audio/wav;base64,' .base64_encode($audio_data) .'"  title="'.$audio_name.'"/>';
          
-        
     
-            if ($photo_type == "image/jpeg" or $photo_type == "image/jpg" or $photo_type == "image/png" or $photo_type == "image/gif")
+             if ($audio_type == "audio/mp3")
               {
-             if  ($photo_size > 0)
+             if  ($audio_size > 0)
                    { 
-            echo "<div align='center'> <br>  <font color='black' size='4'> </b> $photo_name </b> </font> <hr> $photo_data_view  </div>";
+               echo "<div align='center'> <br>  <font color='black' size='4'> </b> $audio_name </b> </font>
+                      <hr> $audio_data_view  
+                     </div>";
+
+              echo "<br><br>";
+
+              echo "<div align='center'>
+                     <img src='/photos/audio.gif' height='350' width='400'> 
+                    </div>";
                    }
                 }
                 

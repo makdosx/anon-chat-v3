@@ -107,13 +107,15 @@
    
    
      
-     $pic_id = $_GET['pic_id'];
-     $pic_name = $_GET['pic_name'];
+     $pdf_id = $_GET['pdf_id'];
+     $pdf_name = $_GET['pdf_name'];
      
 
      // deutero meros emfanish munhmatwn
 
-   $sql="select id, multimedia_name, multimedia_type, multimedia_size, multimedia_data from chat where id ='$pic_id' and multimedia_name = '$pic_name' ";
+   $sql="select id, multimedia_name, multimedia_type, multimedia_size, multimedia_data 
+         from chat 
+         where id ='$pdf_id'  and multimedia_name = '$pdf_name' ";
    $result=$conn->query($sql);
 
         
@@ -135,25 +137,25 @@
                 {
           
           
-         $photo_name = $row['multimedia_name'];
+         $pdf_name = $row['multimedia_name'];
 
-         $photo_type = $row['multimedia_type'];
+         $pdf_type = $row['multimedia_type'];
          
-         $photo_size = $row['multimedia_size'];
+         $pdf_size = $row['multimedia_size'];
         
-         $photo_data = $row['multimedia_data'];
+         $pdf_data = $row['multimedia_data'];
         
         
         
-     $photo_data_view =   '<img src="data:image/jpeg;base64,'. base64_encode($photo_data) .'"  title="'.$photo_name.'" height=80% width=auto />';
+        $pdf_data_view = $pdf_data;
          
-        
     
-            if ($photo_type == "image/jpeg" or $photo_type == "image/jpg" or $photo_type == "image/png" or $photo_type == "image/gif")
+             if ($pdf_type == "application/pdf")
               {
-             if  ($photo_size > 0)
+             if  ($pdf_size > 0)
                    { 
-            echo "<div align='center'> <br>  <font color='black' size='4'> </b> $photo_name </b> </font> <hr> $photo_data_view  </div>";
+                   header('Content-type: application/pdf');
+                   echo $pdf_data_view .".pdf";
                    }
                 }
                 

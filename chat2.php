@@ -633,36 +633,49 @@ echo "<div id='reload'>
                         </a>"; 
          
         
+        $audio_data_view = "<a href='view_audios.php?aud_id=$id&aud_name=$mutimedia_name_0' target='_blank'>
+                          <font color='white'> $mutimedia_name </font>
+                        </a>";
+
+
         $video_data_view = "<a href='view_videos.php?vid_id=$id&vid_name=$mutimedia_name_0' target='_blank'>
                           <font color='white'> $mutimedia_name </font>
                         </a>";
                         
-                        
-         $photo_data_view2 = "<a href='view_pictures.php?pic_id=$id&pic_name=$mutimedia_name_0' target='_blank'>
+
+        $pdf_data_view = "<a href='view_pdfs.php?pdf_id=$id&pdf_name=$mutimedia_name_0' target='_blank'>
+                          <font color='white'> $mutimedia_name </font>
+                        </a>";
+
+                   
+       $text_data_view = "<a href='view_texts.php?txt_id=$id&txt_name=$mutimedia_name_0' target='_blank'>
+                          <font color='white'> $mutimedia_name </font>
+                        </a>";
+
+
+
+
+        $photo_data_view2 = "<a href='view_pictures.php?pic_id=$id&pic_name=$mutimedia_name_0' target='_blank'>
                           <font color='black'> $mutimedia_name </font>
                         </a>"; 
          
-        
-        $video_data_view2 = "<a href='view_videos.php?vid_id=$id&vid_name=$mutimedia_name_0' target='_blank'>
+
+       $audio_data_view2 = "<a href='view_audios.php?aud_id=$id&aud_name=$mutimedia_name_0' target='_blank'>
+                          <font color='black'> $mutimedia_name </font>
+                        </a>";
+
+
+       $video_data_view2 = "<a href='view_videos.php?vid_id=$id&vid_name=$mutimedia_name_0' target='_blank'>
                           <font color='black'> $mutimedia_name </font>
                         </a>";           
         
-       // $audio_data =  '<audio controls src="data:audio/wav;base64,' .base64_encode($row['multimedia_data']) .'"  title="'.$row['multimedia_name'].'"/>';
- 
- 
+        $pdf_data_view2 = "<a href='view_pdfs.php?pdf_id=$id&pdf_name=$mutimedia_name_0' target='_blank'>
+                          <font color='black'> $mutimedia_name </font>
+                        </a>";       
 
-
-               // for inside avatar in messages
-               // <img src='/photos/favicon.ico' height='25'  width='25'>
-
-
-
-                // $images = array("image/jpeg","image/jpg","image/png");
-                 //$audios = array("audio/wav","audio/mp3");
-                // $videos= array ("video/mp4");
-                 //$texts = array("text/plain","application/octet-stream");
-                // $pdfs = array ("application/pdf");
-
+        $text_data_view2 = "<a href='view_texts.php?txt_id=$id&txt_name=$mutimedia_name_0' target='_blank'>
+                          <font color='black'> $mutimedia_name </font>
+                        </a>";
 
 
 
@@ -688,8 +701,20 @@ echo "<div id='reload'>
                    }
                 }
                 
+
+
+        if ($multimedia_type == "audio/mp3")
+              {
+             if  ($multimedia_size > 0)
+                   { 
+                $mes = "<td id='td_mess'>
+         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view  <br> </b> </font> 
+              </td>";
+                   }
+                }
                  
             
+
          if ($multimedia_type == "video/mp4")
                {
             if  ($multimedia_size > 0)
@@ -700,8 +725,30 @@ echo "<div id='reload'>
                 }
                }
               
-              
-                 }
+
+        if ($multimedia_type == "application/pdf")
+              {
+             if  ($multimedia_size > 0)
+                   { 
+                $mes = "<td id='td_mess'>
+         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view  <br> </b> </font> 
+              </td>";
+                   }
+                }
+
+
+   if ($multimedia_type == "text/plain")
+              {
+             if  ($multimedia_size > 0)
+                   { 
+                $mes = "<td id='td_mess'>
+         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view  <br> </b> </font> 
+              </td>";
+                   }
+                }
+
+     
+             } // end session login == from
       
 
 
@@ -730,6 +777,17 @@ echo "<div id='reload'>
                 }
                 
                  
+      if ($multimedia_type == "audio/mp3")
+              {
+             if  ($multimedia_size > 0)
+                   { 
+                $mes = "<td id='td_mess'>
+         <font color='black'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $photo_data_view2  <br> </b> </font> 
+              </td>";
+                   }
+                }
+
+
             
          if ($multimedia_type == "video/mp4")
                {
@@ -740,9 +798,32 @@ echo "<div id='reload'>
               </td>";  
                 }
                }
+
+
+       if ($multimedia_type == "application/pdf")
+              {
+             if  ($multimedia_size > 0)
+                   { 
+                $mes = "<td id='td_mess'>
+         <font color='black'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view2  <br> </b> </font> 
+              </td>";
+                   }
+                }
               
+
+
+     if ($multimedia_type == "text/plain")
+              {
+             if  ($multimedia_size > 0)
+                   { 
+                $mes = "<td id='td_mess'>
+         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view2  <br> </b> </font> 
+              </td>";
+                   }
+                }
+
               
-                 }
+            } // end session login != from
 
 
 
