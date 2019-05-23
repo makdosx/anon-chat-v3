@@ -1,14 +1,14 @@
 /*
- * Copyright (c) 2016-2017 Barchampas Gerasimos <http://anon-chat.co.nf/>
- * Anon-chat is a program that allows anonymous conversations.
+ * Copyright (c) 2016-2019 Barchampas Gerasimos <http://chat.openloadlinks.com>
+ * anon-chat-v2 is a program that allows anonymous conversations.
  *
- * Anon-chat is free software: you can redistribute it and/or modify
+ * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
  *
- * Anon-chat is distributed in the hope that it will be useful,
+ * anon-chat-v2 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
