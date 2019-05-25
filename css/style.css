@@ -108,7 +108,7 @@ label {
   -webkit-transform: translateY(6px);
           transform: translateY(6px);
   left: 13px;
-  color: rgba(0.5,255, 255, 255); /*rgba(255, 255, 255, 0.5);*/
+  color: black /*rgba(255, 255, 255, 0.5);*/
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
@@ -143,7 +143,7 @@ input, textarea {
   background: none;
   background-image: none;
   border: 1px solid #4B9A9F;
-  color: rgba(0.5,255, 255, 255);
+  color: black;
   border-radius: 0;
   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
   transition: border-color .25s ease, box-shadow .25s ease;
