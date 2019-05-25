@@ -267,6 +267,8 @@ session_start();
 
         if (isset($_POST['submit']))
              {
+                 
+             $username = $_SESSION['login'];     
 
         $avatar_name  =  $_FILES['avatar']['name'];
         $avatar_type  =  $_FILES['avatar']['type'];
@@ -292,27 +294,76 @@ session_start();
        else
          {
  
-          $user_avatar = $_SESSION['login'];
+           // Check for errors
+         if($_FILES['file_upload']['error'] > 0)
+          {
+          die('<div align="center"> An error ocurred when uploading. </div>');
+           }
 
-          $sql = "UPDATE avatar SET photo_name = '$avatar_name', photo_type = '$avatar_type', 
-                                    photo_size = '$avatar_size', photo_data = '$avatar_data'
-                  WHERE username = '$user_avatar'";
-          $result = $conn->query($sql);
- 
-           if ($result == true)
+
+          if(!getimagesize($_FILES['avatar']['tmp_name'])){
+              die('<div align="center"> Please ensure you are uploading an image. </div>');
+             }
+            
+             
+            // Check filetype
+             if($_FILES['avatar']['type'] != 'image/png') 
+                 {
+                die('<div align="center"> Unsupported filetype uploaded (Only png images). </div>');
+                 }
+
+
+            // Check filesize
+             if($_FILES['avatar']['size'] > 1500000)
+               {
+              die('<div align="center"> File uploaded exceeds maximum upload size. </div>');
+               }
+               
+
+            // Check if the file exists
+              if(file_exists('upload/' . $_FILES['avatar']['name']))
+                 {
+               die('<div align="center"> File with that name already exists. </div>');
+                 }
+                 
+
+           // Upload file
+           if(!move_uploaded_file($_FILES['avatar']['tmp_name'], 'avatars/' . "$username.png"))
               {
-                echo '<script type="text/javascript">alert("Avatar was successfully set");
+                echo '<script type="text/javascript">alert("Avatar was not set! Try again");
+                      </script>';
+                echo ("<script>location.href='avatar_change.php'</script>"); 
+                }
+
+            else
+             {
+               echo '<script type="text/javascript">alert("Avatar was successfully set");
+                </script>';
+               echo ("<script>document.location.reload(true);document.location='chat.php'</script>"); 
+             }
+             
+
+
+
+/*
+        if (move_uploaded_file($avatar_data, $uploadfile)) 
+         {
+       echo '<script type="text/javascript">alert("Avatar was successfully set");
                 </script>';
                echo ("<script>location.href='chat.php'</script>"); 
-               }
+          }
+          
+          
+        else 
+         {
+         echo '<script type="text/javascript">alert("Avatar was not set! Try again");
+              </script>';
+          echo ("<script>location.href='avatar_change.php'</script>"); 
+            }
+*/
 
 
-             else
-               {
-                 echo '<script type="text/javascript">alert("Avatar was not set! Try again");
-                   </script>';
-                   echo ("<script>location.href='avatar_change.php'</script>"); 
-                }         
+
 
          }
 
@@ -329,3 +380,4 @@ session_start();
 
 
 ?>
+

@@ -116,7 +116,7 @@ width:17em;
 #del
 {
 position:fixed;
-bottom:11%;
+bottom:1%;
 right:40%;
 width:20%;
 text-decoration:none;
@@ -137,7 +137,7 @@ font-size:13px;
 #del:hover
 {
 position:fixed;
-bottom:11%;
+bottom:1%;
 right:40%;
 width:20%;
 text-decoration:none;
@@ -255,7 +255,7 @@ margin-left: -100px;
 .table4
 {
 position: fixed;
-top: 20%;
+top: 18%;
 left: 38%;
 margin-top: -50px;
 margin-left: -100px;
@@ -266,11 +266,11 @@ border-color:;
 border-collapse:separate; 
 border-spacing:1em;
 display: block;
-height: 65%;
+height: 75%;
 overflow-y: auto;
 width: 100%;
 text-align: center;
-font-size: 18px;
+font-size: 16px;
 
 
 
@@ -287,10 +287,10 @@ width: 100%;
 
 #td_mess
 {
-background-color:#4080FF;
+background-color:#F3635A;
 border-style:solid;
 border-width:0.3em; 
-border-color:#4080FF;
+border-color:#F3635A;
 border-radius: 25px;
 width: 100%; 
 }
@@ -299,10 +299,10 @@ width: 100%;
 
 #td_mess2
 {
-background-color:#F1F0F0;
+background-color:#D3CECE;
 border-style:solid;
 border-width:0.3em; 
-border-color:#F1F0F0;
+border-color:#D3CECE;
 border-radius: 25px;
 width: 100%; 
 }
@@ -311,8 +311,8 @@ width: 100%;
 
 #avatar1
 {
-height: 8%;
-width: 5%;
+height: 6%;
+width: 4%;
 border-radius: 50%;
 }
 
@@ -385,10 +385,18 @@ $(function() {
 
 <script type="text/javascript">
 
+/*
+ setInterval(function()
+    {
+    $("#reload").load(location.href + " #reload1");
+    },2000);
+*/
+
+
 
 var time = new Date().getTime();
 
-var refreshTime = 100;
+var refreshTime = 30000;
 
 $(document).bind("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error hover change", function (e) {
     time = new Date().getTime();
@@ -407,6 +415,16 @@ setTimeout(refresh, refreshTime);
     
 </script>
 
+
+
+<!--
+<script type="text/javascript">
+if (location.href.indexOf('read')==-1)
+{
+   location.href=location.href+'?read';
+}
+</script>
+-->
 
 
 </head>
@@ -476,6 +494,8 @@ setTimeout(refresh, refreshTime);
 
 
 
+
+
     // prwto meros emfanish onomatos kai avatar
 
 
@@ -516,20 +536,11 @@ setTimeout(refresh, refreshTime);
                     <hr>
                 </div>";
                 } 
- 
 
-
-
-
- $sql_id="select id from chat where fingerprint='$finger' and message!='request_conversation' order by id desc";
- $result_id=$conn->query($sql_id);
-  $row_id = $result_id->fetch_assoc();
-      $last_id = $row_id['id'];
-      //echo $last_id; 
    
   
 
- $sql="select * from chat where fingerprint='$finger' and message!='request_conversation' and id <= '$last_id' order by id desc limit 20";
+ $sql="select * from chat where fingerprint='$finger' and message!='request_conversation' order by id desc";
  $result=$conn->query($sql);
 
 
@@ -556,7 +567,7 @@ setTimeout(refresh, refreshTime);
 
 
             echo "<td id='td_default_mess'>
-                    <a href='chat3.php?fingerprint=$finger'> view all messages </>
+                    <a href='chat2.php?fingerprint=$finger'> Messenger </a>
                     <font color='white'> <hr id='hr'> </font> 
               </td>";
 
@@ -576,13 +587,11 @@ setTimeout(refresh, refreshTime);
           
           $from =  $row['_from'];
           
-          //$user_avatar = $_SESSION['login'];
-
          //avatar_data = $row['avatar'];
         // $avatar = '<img id="avatar2" src="data:image/jpeg;base64,'. base64_encode($avatar_data) .'"/>';
           
-           $avatar_user = $from."."."png"; 
-           $avatar = "<img id='avatar2' src='/avatars/$avatar_user'>";
+           $avatar_from = $from."."."png"; 
+           $avatar = "<img id='avatar2' src='/avatars/$avatar_from'>";
  
           $to   =  $row['_to']; 
           
@@ -818,195 +827,6 @@ setTimeout(refresh, refreshTime);
                 <input type='submit'  name='delete_submit' value='Delete Conversation &nbsp; &nbsp;' id='del'/> 
         </form>
          </div>";
-
-
-
-echo'
- <div align="center">
-  <form action="" method="POST" class="form1" autocomplete="off">
-      <br><br>
-   <input type="text"  class="chat" name="chat_text" maxlength="512" autofocus="autofocus"  id="mes" required>
-    <br><br>
-  <input type="hidden" name="chat_submit" value="Send" id="button">
-  </form>
-  </div>
-
-
-
-    <div id="footer">
-   
-     <form action="" method="post" enctype="multipart/form-data">
-         
-	<div class="form-group col-xs-3">
-		<div class="input-group input-file" name="multimedia">
-			<span class="input-group-btn">
-        		<button class="btn btn-default btn-choose" type="button">Choose</button>
-    		</span>
-    		<input type="text" class="form-control" placeholder="Choose a file..." />
-    		<span class="input-group-btn">
-       			 <button class="btn btn-primary pull-right" name="submit_multimedia" type="submit"> upload </button>
-    		</span>
-		</div>
-	</div>
-   
-     </form>
-     
-    </div> ';
-
-
-
-
-// deutero meros apostolh mhnumatos
-
-
-  if(isset($_POST['chat_submit']))   
-    {
-  
-   $sql01="select id2 from chat where fingerprint='$finger'";
-   $result01=$conn->query($sql01);
-
- 
-     while ($row01 = $result01->fetch_assoc())
-       {
-
-
-     $id2 = $row01['id2'];
-       
-
-     } // end of while for id2
-
-
-
-  $chat_text=$_POST['chat_text'];
-
-
-    $chat_text = htmlspecialchars($chat_text);
-   $chat_text = trim($chat_text);
-  $chat_text = stripslashes($chat_text);
-  $chat_text = $conn->real_escape_string($chat_text); 
-
- 
-
-  $i = substr(str_shuffle(str_repeat("0123456789", 10)), 0, 10);
-
-  $ip_from = $_SERVER['REMOTE_ADDR'];
-  
-
- $sql2="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','request$i','request$i','$finger')";
-  $result2=$conn->query($sql2);
-
-
-       if ($result2)
-              {    
-
-
-        $sql3="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','request$i','request$i','$finger')";
-  $result3=$conn->query($sql3);
-        
-         
-                    exit();
-                          }
-                     
-
-                  else
-                    {  
-               echo '<script type="text/javascript">alert("Error! Can not be sent message");
-              </script>';
-                          }  
-                       
-             
-   
-
-                     
-     }  // end of if send message
-
-
-
-
-
-
-
-   // insert photo
-   
-     if (isset($_POST['submit_multimedia']))
-       {
-           
-        $multimedia_name = $conn->real_escape_string($_FILES['multimedia']['name']);
-        $multimedia_type = $conn->real_escape_string($_FILES['multimedia']['type']);
-        $multimedia_size = $_FILES['multimedia']['size'];
-        $multimedia_data = $conn->real_escape_string(file_get_contents($_FILES ['multimedia']['tmp_name']));
-       
-       $maxsize=16777216;
-      
-       // echo $photo_name ."<br>" .$photo_type ."<br>" .$photo_size ."<br>" .$photo_data;
-      
-     if (empty(file_get_contents($_FILES ['multimedia']['tmp_name'])))
-               {
-               echo '<script type="text/javascript">alert("Error. your file is empty or than bigest to 2mb ");
-            </script>';
-                } 
-                
-                
-          else
-            {
-                
-                
-           $sql4="select id2 from chat where fingerprint='$finger'";
-           $result4=$conn->query($sql4);
-
- 
-     while ($row4 = $result4->fetch_assoc())
-       {
-
-
-      $id3 = $row4['id2'];
-       
-
-     } // end of while for id2
-
-
-
-  $ip_from2 = $_SERVER['REMOTE_ADDR'];
-  $i2 = substr(str_shuffle(str_repeat("0123456789", 10)), 0, 10);
-  
-
-
-  $sql5="INSERT INTO chat (id2,_from,ip_from,_to,multimedia_name,multimedia_type,multimedia_size,multimedia_data,created,request,request_both,request_time,fingerprint)  
-         VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','request$i2','request$i2','$finger')";
-  $result5=$conn->query($sql5);
-
-
-
-       if ($result5)
-              {    
-
-
-  $sql6="INSERT INTO backup_chat (id2,_from,ip_from,_to,multimedia_name,multimedia_type,multimedia_size,multimedia_data,created,request,request_both,request_time,fingerprint)  
-         VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','request$i2','request$i2','$finger')";
-  $result6=$conn->query($sql6);
-
-         //  echo '<script type="text/javascript">alert("Your file has been sent successfully");
-                 // </script>';
-                      }
-                     
-
-                  else
-                    {  
-              // echo '<script type="text/javascript">alert("Error! Can not be sent file");
-             // </script>';
-                      }  
-                               
-                
-                
-            } 
-            
-                
-       } // end of insert photo
-
-
-
 
 
 

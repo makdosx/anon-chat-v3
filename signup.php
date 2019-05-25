@@ -103,8 +103,17 @@
 
    else
     {
-$sql3 = "INSERT INTO login (username,password,email,is_inside) VALUES ('$username','$password','$email','no')";
-$result3=$conn->query($sql3);
+
+      $rand_qr = 5;
+      $qrcode  = substr(str_shuffle("0123456789"),0, $rand_qr);
+             
+      session_start();
+      $_SESSION['qrcode'] = $qrcode;
+
+
+   $sql3 = "INSERT INTO login (username,password,email,is_inside, verification_code, verified) 
+            VALUES ('$username','$password','$email','no','$qrcode','no')";
+   $result3=$conn->query($sql3);
 
 
 
@@ -122,27 +131,36 @@ if (($result3) === TRUE)
       $result5=$conn->query($sql5);  
   
   
-      //set default avatar 
 
- 
+      //set users online for desktop
 
-      $sql6 ="INSERT INTO avatar (username, instant, photo_name, photo_type, photo_size, photo_data)
-             SELECT  '$username', NOW(), 'favicon.png', 'image/png' ,'31897', photo_data
-             FROM avatar WHERE id = 1";
-     $result6=$conn->query($sql6); 
-     
-     
+       $sql6 ="INSERT INTO users_online (username, instant, is_inside)
+                VALUES ('$username', NOW(), 'no')";
+       $result6=$conn->query($sql6); 
      
 
-    echo '<script type="text/javascript">alert("Sign up sucessfuly");
+
+    //set default avatar for messenger
+     
+     $main_dir =  dirname(__FILE__);
+
+     $file = "$main_dir/photos/anon.png";
+     $newfile = "$main_dir/avatars/$username.png";
+
+     copy($file, $newfile);
+
+     chmod("$main_dir/avatars/$username.png",0777);
+     
+
+    echo '<script type="text/javascript">alert("Please Verify your account");
          </script>';
-     echo ("<script>location.href='index.php'</script>");
+     echo ("<script>location.href='verify.php'</script>");
       }
 
 
     else 
      {
-      echo '<script type="text/javascript">alert("Sign up error. please try again");
+      echo '<script type="text/javascript">alert("Something was error. please try again");
          </script>';
      echo ("<script>location.href='index.php'</script>");
      }

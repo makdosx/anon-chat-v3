@@ -56,7 +56,7 @@ if ($conn->connect_error)
     $result=$conn->query($sql); 
 
 
-    $sql2="update profile set is_inside='no' where username='".$_SESSION['login']."'";
+    $sql2="update users_online set is_inside='no' where username='".$_SESSION['login']."'";
     $result2=$conn->query($sql2); 
 
 

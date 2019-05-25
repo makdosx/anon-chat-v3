@@ -64,7 +64,7 @@ $password=md5($_POST['password']);
   $password = $conn->real_escape_string($password); 
 
 
-  $sql = "select * from login where binary password='$password' AND username='$username'";
+  $sql = "select * from login where binary password='$password' AND username='$username' and verified='yes'";
   $result=$conn->query($sql);
 
   if (($result->num_rows)>0)
@@ -74,7 +74,7 @@ $password=md5($_POST['password']);
     $result2=$conn->query($sql2);
 
      
-      $sql3="update avatar set is_inside='yes' where username='$username'";
+      $sql3="update users_online set is_inside='yes' where username='$username'";
       $result3=$conn->query($sql3);
      
 

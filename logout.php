@@ -53,7 +53,7 @@ if ($conn->connect_error)
     $sql1="update login set is_inside='no' where username='".$_SESSION['login']."'";
     $result1=$conn->query($sql1); 
 
-    $sql2="update avatar set is_inside='no' where username='".$_SESSION['login']."'";
+    $sql2="update users_online set is_inside='no' where username='".$_SESSION['login']."'";
     $result2=$conn->query($sql2); 
 
 

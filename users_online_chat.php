@@ -183,8 +183,9 @@ border-radius: 50%;
 
  else
   {
+      
   
-    $sql="select username, photo_data, is_inside from avatar where username != 'default'";
+    $sql="select username, is_inside from users_online where username != 'default'";
     $result=$conn->query($sql);
 
 
@@ -210,8 +211,8 @@ border-radius: 50%;
        
        $is_inside = $row['is_inside'];    
       
-     $avatar_data = $row['photo_data'];
-     $avatar = '<img id="avatar" src="data:image/jpeg;base64,'. base64_encode($avatar_data) .'"/>';  
+      $avatar_user = $username."."."png"; 
+      $avatar = "<img id='avatar' src='/avatars/$avatar_user'>";
     
       
     if($is_inside == 'yes')
@@ -296,6 +297,7 @@ echo " <a href='#' onclick='this.parentNode.parentNode.removeChild(this.parentNo
 
 
 ?>
+
 
 
 
