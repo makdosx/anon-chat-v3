@@ -20,6 +20,8 @@ Anonymous electronic printouts because only text variables are allowed. (text va
 ![screenshots/5](screenshots/5.png) <br> <br> <br>
 
 
+<table>
+
 <tr>
      <td> <img width="100" height="100" src="screenshots/system_requirements.png"> </td>
   <td> System requirements (quad core and more, 4gb ram and more) </td>
