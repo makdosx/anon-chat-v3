@@ -17,6 +17,42 @@ Anonymous electronic printouts because only text variables are allowed. (text va
 
 ![screenshots/4](screenshots/4.png) <br> <br> <br>
 
-![screenshots/5](screenshots/5.png) 
+![screenshots/5](screenshots/5.png) <br> <br> <br>
 
 
+<tr>
+     <td> <img width="100" height="100" src="img/system_requirements.png"> </td>
+  <td> System requirements (quad core and more, 4gb ram and more) </td>
+   </tr>
+   
+  <tr>
+   <td> <img align="left" width="100" height="100" src="img/os.jpg"> </td>
+   <td>  OS System: (Gnu/linux systems bellow) </td>
+  </tr>
+ 
+ <tr>
+  <td> RPM-based (Red Hat Linux, CentOS, Fedora, openSUSE, Mandrake Linux etc) </td>     
+  <td>   <img width="100" height="100" src="img/rpm.png"> </td>   
+</tr>
+  
+ <tr>
+  <td> Debian-based </td>
+  <td> <img width="100" height="100" src="img/debian.jpg"> </td>
+ </tr>
+     
+ <tr>    
+  <td> MEPIS-based </td> 
+  <td> <img width="100" height="100" src="img/mepis.png"> </td> 
+</tr>
+
+<tr>
+ <td> Gentoo-based </td>
+  <td> <img width="100" height="100" src="img/gentoo.jpg"> </td>
+</tr>
+     
+<tr>     
+  <td> Slackware-based </td>
+  <td> <img width="100" height="100" src="img/slackware.jpg"> </td>      
+</tr>
+
+</table>
