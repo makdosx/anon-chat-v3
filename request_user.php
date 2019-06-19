@@ -141,8 +141,8 @@ border-radius: 50%;
 
  setInterval(function()
     {
-    $("#reload").load(location.href + " #reload1");
-    },5000);
+    $("#reload1").load(location.href + " #reload1");
+    },200);
 
 </script>
 
@@ -220,7 +220,8 @@ border-radius: 50%;
                     <td id="td_created"> <font color="grey"> <b> Sent </b> </font> </td>
                      <td id="td_from"> <font color="grey"> <b> Avatar </b> </font> </td>
                     <td id="td_from"> <font color="grey"> <b> User </b> </font> </td>
-                    <td id="td_from"> <font color="grey"> <b> Conversation </b> </font> </td>
+                    <td id="td_from"> <font color="grey"> <b> Delete </b> </font> </td>
+                    <td id="td_from"> <font color="grey"> <b> Start </b> </font> </td>
                 </tr>
                  <tr> <td><hr></td>  <td><hr></td>  <td><hr></td>  <td><hr></td>  </tr>';
  
@@ -233,6 +234,8 @@ border-radius: 50%;
  
                  $_from = $row['_from'];
                  $_to   = $row['_to'];
+                 
+                  $finger = $row['fingerprint']; 
  
                   $date1=substr($row['created'],-11,3);
                   $date2=substr($row['created'],-14,2);
@@ -246,13 +249,13 @@ border-radius: 50%;
               if ($_from == $_SESSION['login'])
                 {
 
-             $sql001 = "select photo_data from avatar where username = '$_to'";
+             $sql001 = "select _to from chat where fingerprint='$finger' and message='request_conversation'";
              $result001 = $conn->query($sql001);
 
            while ($row001 = $result001->fetch_assoc())
               {   
-             $avatar_data_to = $row001['photo_data'];
-             $avatar_to = '<img id="avatar" src="data:image/jpeg;base64,'. base64_encode($avatar_data_to) .'"/>';
+                $avatar_data_to = $_to ."." ."png";
+                $avatar_to = "<img id='avatar' src='/avatars/$avatar_data_to'>";
               }
                  
 
@@ -267,26 +270,32 @@ border-radius: 50%;
              <td> <font color='grey'> <b> {$row['_to']} </b> </font> </td>
 
              <td> 
-
-     
-          <button type='button' onclick=openInNewTab_delete('request_delete.php?id2={$row["id2"]}'); name='delete_btn' 
+          
+            <form action='' method='post'>
+          <button type='submit' value='".$row['id2']."' name='delete_btn1' 
                   class='btn btn-sm btn-danger btn_delete'>
                <i class='glyphicon glyphicon-trash'></i> 
                   DELETE 
                </button> 
+            </form>    
 
-                &nbsp; 
+             </td>
              
+  
+              <td>
+                <form>
               <button type='button' onclick=openInNewTab_start('chat2.php?fingerprint={$row["fingerprint"]}'); name='btn_add' id='btn_add' 
                       class='btn btn-sm btn-success'>
                    START
                     <i class='glyphicon glyphicon-open'></i> 
                    </button>   
+                    </form>
 
              </td>
                 </tr>";
 
                  }
+
 
 
 
@@ -297,13 +306,13 @@ border-radius: 50%;
           else  if ($_from != $_SESSION['login'])
                 {
                 
-                $sql002 = "select photo_data from avatar where username = '$_from'";
+                $sql002 = "select _from from chat where fingerprint='$finger' and message='request_conversation'";
                 $result002 = $conn->query($sql002);
 
            while ($row002 = $result002->fetch_assoc())
               {   
-             $avatar_data_from = $row002['photo_data'];
-             $avatar_from = '<img id="avatar" src="data:image/jpeg;base64,'. base64_encode($avatar_data_from) .'"/>';
+                $avatar_data_from = $_from."."."png"; 
+                $avatar_from = "<img id='avatar' src='/avatars/$avatar_data_from'>";
               }
 
                     
@@ -318,19 +327,24 @@ border-radius: 50%;
 
              <td> 
 
-               <button type='button' onclick=openInNewTab_delete('request_delete.php?id2={$row["id2"]}'); name='delete_btn' 
+               <form action='' method='post'>
+               <button type='button' value='".$row['id2']."' name='delete_btn' name='delete_btn2' 
                   class='btn btn-sm btn-danger btn_delete'>
                <i class='glyphicon glyphicon-trash'></i> 
                   DELETE 
                </button> 
+               </form>
+                 </td>
 
-                &nbsp;
-              
+                
+                <td>
+                 <form>
              <button type='button' onclick=openInNewTab_start('chat2.php?fingerprint={$row["fingerprint"]}'); name='btn_add' id='btn_add' 
                       class='btn btn-sm btn-success'>
                    START
                     <i class='glyphicon glyphicon-open'></i> 
                    </button>      
+                  </form>
 
              </td>
                 </tr>";
@@ -358,6 +372,34 @@ border-radius: 50%;
 
      }
  </script>';
+
+
+
+
+  if(isset($_POST['delete_btn1']))
+    {
+
+    $id2 = $_POST['delete_btn1'];
+       
+   $sql="DELETE FROM chat where id2='$id2'";
+   $result=$conn->query($sql);
+
+    }
+         
+         
+         
+  if(isset($_POST['delete_btn2']))
+    {
+     $id2 = $_POST['delete_btn2'];
+
+   $sql="DELETE FROM chat where id2='$id2'";
+   $result=$conn->query($sql);
+
+         }
+  
+
+
+
 
 
 

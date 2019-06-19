@@ -146,6 +146,36 @@ border-radius: 50%;
 
 
 
+<style>
+
+.butt 
+{
+background:none!important;
+border:none; 
+padding:0!important;
+    
+font-family:arial,sans-serif; /*input has OS specific font-family*/
+text-decoration:none;
+cursor:pointer;
+}
+
+
+.butt:hover 
+{
+background:none!important;
+border:none; 
+padding:0!important;
+    
+font-family:arial,sans-serif; /*input has OS specific font-family*/
+text-decoration:underline;
+cursor:pointer;
+}
+
+
+
+
+</style>
+
 
 </head>
 
@@ -185,7 +215,7 @@ border-radius: 50%;
   {
       
   
-    $sql="select username, is_inside from users_online where username != 'default'";
+    $sql="select username, is_inside from users_online where username != 'default' and username!='".$_SESSION['login']."' order by username asc";
     $result=$conn->query($sql);
 
 
@@ -226,7 +256,11 @@ border-radius: 50%;
         </td>
 
         <td>  
-        <font size='3' color='black'> $username </font>
+        <font size='3' color='black'> 
+         <form action='' method='post'> <br>
+          <input type='submit' name='user_online' class='butt' value='$username'> 
+         </form>
+        </font>
          </td>
            
         <td>
@@ -257,9 +291,13 @@ border-radius: 50%;
          $avatar
         </td>
 
-       <td>
-        <font size='3' color='black'> $username </font>
-     </td>
+       <td>  
+        <font size='3' color='black'> 
+         <form action='' method='post'> <br>
+          <input type='submit' name='user_offline' class='butt' value='$username'> 
+         </form>
+        </font>
+         </td>
            
         <td>
        <img src=/photos/ofline.png height=10 width=12>
@@ -286,6 +324,280 @@ echo " <a href='#' onclick='this.parentNode.parentNode.removeChild(this.parentNo
       <img src=/photos/hide.png height=70 width=110 title='Hide online user'> 
      </a>";
 */
+
+
+
+
+
+// second place send request users online
+
+  if(isset($_POST['user_online']))   
+    {
+  
+
+    $user_request  = $_POST['user_online'];
+
+    $user_request = htmlspecialchars($user_request);
+    $user_request = trim($user_request);
+    $user_request = stripslashes($user_request);
+    $user_request = $conn->real_escape_string($user_request); 
+
+
+
+        $sql1 = "select username from login"; 
+        $result1 = $conn->query($sql1);
+
+
+        while ($row1 = $result1->fetch_assoc())       
+           {
+
+
+               
+     if ($user_request == $_SESSION['login'])
+     {
+    echo '<script type="text/javascript">alert("Cannot sent request to yourself!");
+         </script>';
+     echo ("<script>location.href='chat.php'</script>");
+       }
+
+
+
+
+ 
+     else if ($row1['username'] == $user_request)
+       {
+
+        $sql2 = "select request_both from chat"; 
+        $result2 = $conn->query($sql2);
+
+      
+           $request_both_0 = $_SESSION['login'] ."_" .$user_request; 
+           $request_both_1 = $user_request ."_" .$_SESSION['login'];
+
+
+    $fingerprint = substr(str_shuffle(str_repeat("0123456789ABCDEF", 32)), 0, 32);
+
+    $id2 = substr(str_shuffle(str_repeat("0123456789", 4)), 0, 4);
+
+    $ip_from = $_SERVER['REMOTE_ADDR'];
+
+    $request_both = $_SESSION['login'] ."_" .$user_request; 
+
+
+     $default_message = "* anon-chat-v2 is a program that allows anonymous
+conversations . Use anon-chat-v2 from here:
+http://chat.openloadlinks.com *";
+  
+
+ $sql3 ="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
+       VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_0','1','$fingerprint');";
+
+
+$sql3.="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint,avatar) 
+         SELECT '$id2', '{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint', photo_data 
+         FROM avatar WHERE username = '{$_SESSION['login']}' ;";
+
+
+$sql3.="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint,avatar) 
+         SELECT '$id2', '{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint', photo_data 
+         FROM avatar WHERE username = '{$_SESSION['login']}' ;";
+
+$sql3 .="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
+          VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint')";
+
+    $result3=$conn->multi_query($sql3);
+
+ 
+
+   
+
+       if ($result3)
+              {    
+
+             $_SESSION['fingerprint'] = $fingerprint;
+              
+
+ 
+            $ip_from = $_SERVER['REMOTE_ADDR'];
+
+
+
+         // echo "<script type='text/javascript'>alert('Success! Request sent to user $user_request');
+             // </script>";
+              // echo ("<script>location.href='users_online_chat.php'</script>"); 
+
+            // $_SESSION['both'] = $request_both_0;
+
+ //echo "<script>window.open('chat2.php?both=$request_both_0','_blank')</script>";
+
+         echo "<script>window.open('chat2.php?both=$request_both_0','_blank')</script>";
+
+                }
+                     
+
+
+                  else
+                    {  
+               echo '<script type="text/javascript">alert("Error! Can not be sent request");
+              </script>';
+               echo ("<script>location.href='users_online_chat.php'</script>"); 
+                          }  
+                       
+         
+
+
+                  }// end of else if check username exists
+ 
+
+
+
+                } // end of while 
+
+              
+
+
+        }  // end of isset submit_request users online
+        
+        
+        
+        
+        
+        
+        
+        
+        
+  // second place send request users offline
+
+  if(isset($_POST['user_offline']))   
+    {
+  
+
+    $user_request  = $_POST['user_offline'];
+
+    $user_request = htmlspecialchars($user_request);
+    $user_request = trim($user_request);
+    $user_request = stripslashes($user_request);
+    $user_request = $conn->real_escape_string($user_request); 
+
+
+
+        $sql1 = "select username from login"; 
+        $result1 = $conn->query($sql1);
+
+
+        while ($row1 = $result1->fetch_assoc())       
+           {
+
+
+               
+     if ($user_request == $_SESSION['login'])
+     {
+    echo '<script type="text/javascript">alert("Cannot sent request to yourself!");
+         </script>';
+     echo ("<script>location.href='chat.php'</script>");
+       }
+
+
+
+
+ 
+     else if ($row1['username'] == $user_request)
+       {
+
+        $sql2 = "select request_both from chat"; 
+        $result2 = $conn->query($sql2);
+
+      
+           $request_both_0 = $_SESSION['login'] ."_" .$user_request; 
+           $request_both_1 = $user_request ."_" .$_SESSION['login'];
+
+
+    $fingerprint = substr(str_shuffle(str_repeat("0123456789ABCDEF", 32)), 0, 32);
+
+    $id2 = substr(str_shuffle(str_repeat("0123456789", 4)), 0, 4);
+
+    $ip_from = $_SERVER['REMOTE_ADDR'];
+
+    $request_both = $_SESSION['login'] ."_" .$user_request; 
+
+
+     $default_message = "* anon-chat-v2 is a program that allows anonymous
+conversations . Use anon-chat-v2 from here:
+http://chat.openloadlinks.com *";
+  
+
+ $sql3 ="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
+       VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_0','1','$fingerprint');";
+
+
+$sql3.="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint,avatar) 
+         SELECT '$id2', '{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint', photo_data 
+         FROM avatar WHERE username = '{$_SESSION['login']}' ;";
+
+
+$sql3.="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint,avatar) 
+         SELECT '$id2', '{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint', photo_data 
+         FROM avatar WHERE username = '{$_SESSION['login']}' ;";
+
+$sql3 .="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
+          VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint')";
+
+    $result3=$conn->multi_query($sql3);
+
+ 
+
+   
+
+       if ($result3)
+              {    
+
+             $_SESSION['fingerprint'] = $fingerprint;
+              
+
+ 
+            $ip_from = $_SERVER['REMOTE_ADDR'];
+
+
+
+         // echo "<script type='text/javascript'>alert('Success! Request sent to user $user_request');
+             // </script>";
+              // echo ("<script>location.href='chat2.php?fingerprint=$fingerprint'</script>"); 
+
+                     //  $_SESSION['both'] = $request_both_0;
+
+        // echo "<script>window.open('chat2.php?both=$request_both_0','_blank')</script>";
+
+         echo "<script>window.open('chat2.php?both=$request_both_0','_blank')</script>";
+
+                }
+                     
+
+
+                  else
+                    {  
+               echo '<script type="text/javascript">alert("Error! Can not be sent request");
+              </script>';
+               echo ("<script>location.href='users_online_chat.php'</script>"); 
+                          }  
+                       
+         
+
+
+                  }// end of else if check username exists
+ 
+
+
+
+                } // end of while 
+
+              
+
+
+        }  // end of isset submit_request users offline    
+        
+
+
+
 
 
 

@@ -260,8 +260,8 @@ border-radius: 25px;
 #avatar2
 {
 object-fit: cover;
-height: 60px;
-width: 60px;
+height: 25px;
+width: 25px;
 border-radius: 50%;
 }
 
@@ -322,7 +322,7 @@ width: 500px;
 
 var time = new Date().getTime();
 
-var refreshTime =  1000;
+var refreshTime =  100;
 
 $(document).bind("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error hover change", function (e) {
     time = new Date().getTime();
@@ -407,7 +407,7 @@ setTimeout(refresh, refreshTime);
 
     $scheme = $_SERVER['REQUEST_SCHEME'] . '://' .$_SERVER['SERVER_NAME'] .$_SERVER['REQUEST_URI'];
 
-   $theme = substr($scheme, (strpos($scheme, '=') ?: -1) + 1);
+    $theme = substr($scheme, (strpos($scheme, '=') ?: -1) + 1);
 
 
 
@@ -509,8 +509,8 @@ echo $conn->error;
 
                   $time = substr($row['created'], -8, 5);
                   
-                  $avatar_data = $row['avatar'];
-                  $avatar = '<img id="avatar2" src="data:image/jpeg;base64,'. base64_encode($avatar_data) .'"/>';
+                   $avatar_user = $_SESSION['login']."."."png"; 
+                   $avatar = "<img id='avatar2' src='/avatars/$avatar_user'>";    
                    
                   $from = $row['_from'];
                   
@@ -525,7 +525,7 @@ echo $conn->error;
              if ($row['_from'] == $_SESSION['login'])
                 {
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <hr>  $message <br> </b> </font> 
+         <font color='white'> $avatar $date $time <br> $message </b> </font> 
               </td>";
                  }
       
@@ -534,7 +534,7 @@ echo $conn->error;
               if ($row['_from'] != $_SESSION['login'])
                 {
                 $mes = "<td id='td_mess2'> 
-              <font color='black'> $avatar $date $time <hr> $message <br> </b> </font> 
+              <font color='black'> $avatar $date $time <br> $message </b> </font> 
               </td>";
                  }
 
@@ -611,9 +611,8 @@ echo $conn->error;
  
    $session_login = $_SESSION['login'];
 
-  $sql2="INSERT INTO forum (creator, theme, created, _from, ip_from, _to, message, avatar) 
-         SELECT '$creator', '$theme', NOW(), '$_from', '$ip_from', 'forum', '$forum_text', photo_data 
-         FROM avatar WHERE username = '$session_login' ";
+  $sql2="INSERT INTO forum (creator, theme, created, _from, ip_from, _to, message) 
+         VALUES ('$creator', '$theme', NOW(), '$_from', '$ip_from', 'forum', '$forum_text')";
   $result2=$conn->query($sql2);
 
 
@@ -623,9 +622,8 @@ echo $conn->error;
         // $sql3="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message) 
               //   VALUES('$creator','$theme', NOW(), '$creator', '$ip_from', 'forum','$forum_text')";
         
-         $sql3="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message, avatar) 
-         SELECT '$creator', '$theme', NOW(),'$_from', '$ip_from' ,'forum' ,'$forum_text', photo_data 
-         FROM avatar WHERE username = '$session_login' ";
+         $sql3="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message) 
+                VALUES('$creator', '$theme', NOW(),'$_from', '$ip_from' ,'forum' ,'$forum_text')";
          $result3=$conn->query($sql3);
  
 

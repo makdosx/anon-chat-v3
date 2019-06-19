@@ -158,7 +158,7 @@ font-size:13px;
 #conv_user
 {
 position: fixed;
-top:0%;
+top:1%;
 left:5%;
 width:90%;
 font-size:30px;
@@ -172,7 +172,7 @@ text-align:center;
 #conv_user:hover
 {
 position:fixed;
-top:0%;
+top:1%;
 left:5%;
 width:90%;
 font-size:30px;
@@ -444,9 +444,10 @@ if (location.href.indexOf('read')==-1)
   <script>
     function close_window() 
       {
-     if (confirm("Do you want to close this conversation?"))
+     if (confirm("Do you want go back to messenger?"))
         {
-    close();
+    //close();
+    window.history.back();
        }
      }
  </script>
@@ -485,21 +486,17 @@ if (location.href.indexOf('read')==-1)
    else
      {
 
-
-
    
   $scheme = $_SERVER['REQUEST_SCHEME'] . '://' .$_SERVER['SERVER_NAME'] .$_SERVER['REQUEST_URI'];
 
-  $finger = substr($scheme, (strpos($scheme, '=') ?: -1) + 1);
-
-
-
+  $both = substr($scheme, (strpos($scheme, '=') ?: -1) + 1);
 
 
     // prwto meros emfanish onomatos kai avatar
 
 
-    $sql0 = "select _from,_to from chat where fingerprint='$finger' and message='request_conversation'";
+    $sql0 = "select _from,_to from chat where request_both = '$both' 
+                     and message='request_conversation'";
     $result0 = $conn->query($sql0);
 
      
@@ -507,6 +504,10 @@ if (location.href.indexOf('read')==-1)
          {
           $_from = $row0['_from'];
           $_to   = $row0['_to'];
+
+          $request_both1 = $_from ."_" .$_to;
+          $request_both2 = $_to ."_" .$_from;   
+
           }
 
 
@@ -540,7 +541,8 @@ if (location.href.indexOf('read')==-1)
    
   
 
- $sql="select * from chat where fingerprint='$finger' and message!='request_conversation' order by id desc";
+ $sql="select * from chat where (request_both = '$request_both1' or request_both = '$request_both2')
+ and message!='request_conversation' order by id desc";
  $result=$conn->query($sql);
 
 
@@ -567,7 +569,7 @@ if (location.href.indexOf('read')==-1)
 
 
             echo "<td id='td_default_mess'>
-                    <a href='chat2.php?fingerprint=$finger'> Messenger </a>
+                    <a href='chat2.php?both=$both'> Messenger </a>
                     <font color='white'> <hr id='hr'> </font> 
               </td>";
 
@@ -763,7 +765,7 @@ if (location.href.indexOf('read')==-1)
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='black'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $photo_data_view2  <br> </b> </font> 
+         <font color='black'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view2  <br> </b> </font> 
               </td>";
                    }
                 }
@@ -823,12 +825,13 @@ if (location.href.indexOf('read')==-1)
 
 
  echo  "<div align='center'>
-         <form action='delete_chat_messages.php?fingerprint=$finger' method='post'/>
+         <form action='delete_chat_messages.php?both=$both' method='post'/>
                 <input type='submit'  name='delete_submit' value='Delete Conversation &nbsp; &nbsp;' id='del'/> 
         </form>
          </div>";
 
 
+       // echo "<div align='center'> <a href='chat3.php?both=$both'> Top </a> <div>";
 
    } // end of else data
 

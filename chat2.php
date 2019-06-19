@@ -20,6 +20,7 @@
  *
  */
 
+
  session_start();
 
  if (!isset($_SESSION['login']))
@@ -42,6 +43,12 @@
 
  <link rel="stylesheet" type="text/css" href="css/chat.css">
 
+
+	<script src="js/recorder.js"></script>
+        <script src="js/Fr.voice.js"></script>
+        <script src="js/jquery.js"></script>
+	<script src="js/app.js"></script>
+        
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
@@ -86,7 +93,7 @@ width: 100%;
 
 .chat
 {
-height:90px;
+height:70px;
 width:40%;
 position: fixed;
 left: 30%;
@@ -158,7 +165,7 @@ font-size:13px;
 #conv_user
 {
 position: fixed;
-top:0%;
+top:1%;
 left:5%;
 width:90%;
 font-size:30px;
@@ -172,7 +179,7 @@ text-align:center;
 #conv_user:hover
 {
 position:fixed;
-top:0%;
+top:1%;
 left:5%;
 width:90%;
 font-size:30px;
@@ -212,6 +219,14 @@ width:55px;
 position: fixed;
 left: 1%;
 bottom: 0%;
+}
+
+
+#footer2
+{
+position: fixed;
+right: 1%;
+bottom: 1%;
 }
 
 
@@ -321,8 +336,8 @@ border-radius: 50%;
 #avatar2
 {
 object-fit: cover;
-height: 40px;
-width: 40px;
+height: 30px;
+width: 30px;
 border-radius: 50%;
 }
 
@@ -341,6 +356,198 @@ background-color: #f00;
 height: 5px;
 width: 500px;
 }
+
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   text-align: center;
+}
+
+
+.progress-bar {
+    width: calc(100% - 6px);
+    height:20px;
+    background: #e0e0e0;
+    padding: 3px;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+}
+
+.progress-bar-fill {
+    display: block;
+    height: 20px;
+    background: #659cef;
+    border-radius: 3px;
+    /*transition: width 250ms ease-in-out;*/
+    transition: width 5s ease-in-out;
+}
+
+
+
+#controls {
+  display: flex;
+  margin-top: 2rem;
+}
+
+
+.button_audio {
+  height:40px;
+  width: 80px;
+  border: none;
+  border-radius: 1em;
+  background: #ed341d;
+  margin-left: 2px;
+  box-shadow: inset 0 -0.15rem 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:#ffffff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+
+.button_audio:hover, .button_audio:focus {
+  outline: none;
+  background: #c72d1c;
+}
+
+
+.button_audio::-moz-focus-inner {
+  border: 0;
+}
+
+
+.button_audio:active {
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
+  line-height: 5px;
+}
+
+
+.button_audio:disabled {
+  pointer-events: none;
+  background: lightgray;
+}
+
+.button_audio:first-child {
+  margin-left: 0;
+}
+
+
+.audio {
+  display: block;
+  width: 100%;
+  margin-top: 0.2rem;
+}
+
+
+li {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+
+#formats {
+  margin-top: 0.5rem;
+  font-size: 80%;
+}
+
+
+
+
+
+/* modal image */
+
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+
 
 
 </style>
@@ -382,6 +589,30 @@ $(function() {
 
 
 
+<script type="text/javascript">
+        document.getElementById("txt_1").value = getSavedValue("txt_1");    // set the value to this input
+        document.getElementById("txt_2").value = getSavedValue("txt_2");   // set the value to this input
+        /* Here you can add more inputs to set value. if it's saved */
+
+        //Save the value function - save it to localStorage as (ID, VALUE)
+        function saveValue(e){
+            var id = e.id;  // get the sender's id to save it . 
+            var val = e.value; // get the value. 
+            localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+        }
+
+        //get the saved value function - return the value of "v" from localStorage. 
+        function getSavedValue  (v){
+            if (!localStorage.getItem(v)) {
+                return "";// You can change this to your defualt value. 
+            }
+            return localStorage.getItem(v);
+        }
+</script>
+
+
+
+
 
 <script type="text/javascript">
 
@@ -411,28 +642,11 @@ setTimeout(refresh, refreshTime);
 
 </head>
 
-
-
- <body>
-
+</head>
 
 <br><br>
 
-   
-  <a href="javascript:close_window();" id="close_tab"><img src="/photos/close.png" id="img_close" title="close conversation"></a>
-
-
-
-  <script>
-    function close_window() 
-      {
-     if (confirm("Do you want to close this conversation?"))
-        {
-    close();
-       }
-     }
- </script>
-
+<body>
 
 </body>
 </html>
@@ -472,14 +686,15 @@ setTimeout(refresh, refreshTime);
    
   $scheme = $_SERVER['REQUEST_SCHEME'] . '://' .$_SERVER['SERVER_NAME'] .$_SERVER['REQUEST_URI'];
 
-  $finger = substr($scheme, (strpos($scheme, '=') ?: -1) + 1);
+  $both = substr($scheme, (strpos($scheme, '=') ?: -1) + 1);
 
-
+  $finger = $_SESSION['fingerprint'];
 
     // prwto meros emfanish onomatos kai avatar
 
 
-    $sql0 = "select _from,_to from chat where fingerprint='$finger' and message='request_conversation'";
+    $sql0 = "select _from,_to from chat where request_both = '$both'
+                     and message='request_conversation'";
     $result0 = $conn->query($sql0);
 
      
@@ -487,7 +702,48 @@ setTimeout(refresh, refreshTime);
          {
           $_from = $row0['_from'];
           $_to   = $row0['_to'];
+
+          $request_both1 = $_from ."_" .$_to;
+          $request_both2 = $_to ."_" .$_from;    
+
+          $both_to = $_to;
+
           }
+   
+
+        $request_both1_1 = explode("_", $request_both1, 2);
+        $request_both1_1 = $request_both1_1[0];
+
+        $request_both2_2 = explode("_", $request_both2, 2);
+        $request_both2_2 = $request_both2_2[0];
+
+        //echo $request_both1 ."<br>" .$request_both2;
+
+
+     
+         // authentication for conversations
+          if ($request_both1_1 == $_SESSION['login'] or $request_both2_2 == $_SESSION['login'])            
+               {
+
+
+       $_SESSION['both'] = $both;
+   
+
+
+ echo' <a href="javascript:close_window();" id="close_tab"><img src="/photos/close.png" id="img_close" title="close conversation"></a>
+
+
+
+  <script>
+    function close_window() 
+      {
+     if (confirm("Do you want to close this conversation?"))
+        {
+    close();
+       }
+     }
+ </script>';
+
 
 
           if ($_from == $_SESSION['login'])
@@ -520,8 +776,8 @@ setTimeout(refresh, refreshTime);
 
 
 
-
- $sql_id="select id from chat where fingerprint='$finger' and message!='request_conversation' order by id desc";
+ $sql_id="select id from chat where (request_both = '$request_both1' or request_both = '$request_both2')
+          and message!='request_conversation' order by id desc";
  $result_id=$conn->query($sql_id);
   $row_id = $result_id->fetch_assoc();
       $last_id = $row_id['id'];
@@ -529,21 +785,10 @@ setTimeout(refresh, refreshTime);
    
   
 
- $sql="select * from chat where fingerprint='$finger' and message!='request_conversation' and id <= '$last_id' order by id desc limit 20";
+ $sql="select * from chat where (request_both = '$request_both1' or request_both = '$request_both2') 
+and message!='request_conversation' and id <= '$last_id' order by id desc limit 20";
  $result=$conn->query($sql);
 
-
-           if(!$result)
-             {
-             echo "Dont files" ."<br>";
-              }
-   
-
-
-
-           else
-             {
-                 
         
         echo '<div id="reload">
               <div id="reload1">
@@ -554,11 +799,12 @@ setTimeout(refresh, refreshTime);
     //     inner join chat on profile.username = chat._from
       //   where chat._from='".$_SESSION['login']."'";
 
-
+  
             echo "<td id='td_default_mess'>
-                    <a href='chat3.php?fingerprint=$finger'> view all messages </>
+                    <a href='chat3.php?both=$both'> view all messages </>
                     <font color='white'> <hr id='hr'> </font> 
               </td>";
+
 
 
            while ($row=$result->fetch_assoc())
@@ -587,7 +833,42 @@ setTimeout(refresh, refreshTime);
           $to   =  $row['_to']; 
           
           $message = wordwrap($row['message'], 50, "<br>", true);
-          
+
+
+            // echo emoticons
+            // :) - :D - :( - :'( -
+
+
+              $emoticon = array(":)", ":D", ":(", ":'(", ":P", "O:)",
+                                "3:)", "o.O", ";)", ":O", "-_-", ">:O",
+                                ":*", "^_^", "8-)", "8|", ">:(", ":v",
+                                ":/", ":3", "<3", "(y)", "(^^^)", ":|]",
+                                ":poop:", ":putnam:", "like");
+
+              $emoticons = array("1.png" => ":)", "2.png" => ":D", "3.png" => ":(",
+                                 "4.png" => ":'(", "5.png" => ":P", "6.png" => "O:)",
+                                 "7.png" => "3:)", "8.png" => "o.O", "9.png" => ";)",
+                                 "10.png" => ":O", "11.png" => "-_-", "12.png" => ">:O", 
+                                 "13.png" => ":*", "14.png" => "^_^", "15.png" => "8-)",
+                                 "16.png" => "8|", "17.png" => ">:(", "18.png" => ":v",
+                                 "19.png" => ":/", "20.png" => ":3", "21.png" => "<3",
+                                 "22.png" => "(y)", "23.png" => "(^^^)", "24.png" => ":|]", 
+                                 "25.png" => ":poop:", "26.png" => ":putnam:", "like.png" => "like");
+
+            if (in_array($message, $emoticon)) 
+                   {                 
+
+                   $key = array_search($message, $emoticons); 
+ 
+                   $message = "<img src='emoticons/$key' height='25' width='25'>";
+
+                     }
+
+
+
+
+        
+
           
          $mutimedia_name_0 = $row['multimedia_name'];
          $mutimedia_name = wordwrap($mutimedia_name_0, 50, "<br>", true);
@@ -658,7 +939,7 @@ setTimeout(refresh, refreshTime);
               if  ($message != null)
                    { 
                     $mes = "<td id='td_mess'>
-                    <font color='white'>  $avatar $date $time <hr>  $message <br> </b> </font> 
+                    <font color='white'>  $avatar $date $time <br>  $message </b> </font> 
               </td>";
                  }
                 
@@ -668,7 +949,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view  <br> </b> </font> 
+         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -680,7 +961,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view  <br> </b> </font> 
+         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -692,7 +973,7 @@ setTimeout(refresh, refreshTime);
             if  ($multimedia_size > 0)
                {
          $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <hr> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view <br> </b> </font> 
+         <font color='white'> $avatar $date $time <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view </b> </font> 
               </td>";  
                 }
                }
@@ -703,7 +984,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view  <br> </b> </font> 
+         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -714,7 +995,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view  <br> </b> </font> 
+         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -733,7 +1014,7 @@ setTimeout(refresh, refreshTime);
               if  ($message != null)
                    { 
                 $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time <hr>  $message <br> </b> </font> 
+         <font color='black'> $avatar $date $time <br>  $message </b> </font> 
               </td>";
                  }
                 
@@ -743,7 +1024,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time <hr> <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view2  <br> </b> </font> 
+         <font color='black'> $avatar $date $time <br> <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -754,7 +1035,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='black'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $photo_data_view2  <br> </b> </font> 
+         <font color='black'> $avatar $date $time <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -766,7 +1047,7 @@ setTimeout(refresh, refreshTime);
             if  ($multimedia_size > 0)
                {
          $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time <hr> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view2 <br> </b> </font> 
+         <font color='black'> $avatar $date $time <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view2 </b> </font> 
               </td>";  
                 }
                }
@@ -777,7 +1058,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='black'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view2  <br> </b> </font> 
+         <font color='black'> $avatar $date $time <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -789,7 +1070,7 @@ setTimeout(refresh, refreshTime);
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <hr>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view2  <br> </b> </font> 
+         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -805,36 +1086,43 @@ setTimeout(refresh, refreshTime);
 
             } // end of while chat
 
-    echo '</table> </div> </div>';
+    echo '</table> </div> </div>';;
           
-         } // end of else echo
-
-
 
 
 
  echo  "<div align='center'>
-         <form action='delete_chat_messages.php?fingerprint=$finger' method='post'/>
+         <form action='delete_chat_messages.php?both=$both' method='post'/>
                 <input type='submit'  name='delete_submit' value='Delete Conversation &nbsp; &nbsp;' id='del'/> 
         </form>
          </div>";
-
 
 
 echo'
  <div align="center">
   <form action="" method="POST" class="form1" autocomplete="off">
       <br><br>
-   <input type="text"  class="chat" name="chat_text" maxlength="512" autofocus="autofocus"  id="mes" required>
+   <textarea class="chat" name="chat_text" maxlength="512" autofocus="autofocus"  id="textarea" required></textarea>
     <br><br>
   <input type="hidden" name="chat_submit" value="Send" id="button">
   </form>
   </div>
 
 
+<script>
+$("#textarea").keypress(function (e) {
+    if(e.which == 13 && !e.shiftKey) {        
+        $(this).closest("form").submit();
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
+
 
     <div id="footer">
-   
+  
+
      <form action="" method="post" enctype="multipart/form-data">
          
 	<div class="form-group col-xs-3">
@@ -844,14 +1132,99 @@ echo'
     		</span>
     		<input type="text" class="form-control" placeholder="Choose a file..." />
     		<span class="input-group-btn">
-       			 <button class="btn btn-primary pull-right" name="submit_multimedia" type="submit"> upload </button>
+        <button class="btn btn-primary pull-right" name="submit_multimedia" type="submit"> upload </button>
     		</span>
 		</div>
 	</div>
    
      </form>
-     
-    </div> ';
+
+    </div>
+
+
+<div id="footer2">
+
+<img id="myImg" src="emoticons/emoticons.png" alt="Snow" style="width:100%;max-width:200px">
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("myImg");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+</script>
+
+</div>';
+
+
+/*
+
+      <a class="button recordButton" id="record">Record</a>
+      <a class="button disabled one" id="pause">Pause</a>
+      <a class="button disabled one" id="save">Ready</a>
+      <a class="button disabled one" href="upload2.php">Send</a>
+   
+		<style>
+		.button{
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0px 5px;
+			padding: 5px 12px;
+			cursor: pointer;
+			outline: none;
+			font-size: 13px;
+			text-decoration: none !important;
+			text-align: center;
+			color:#fff;
+			background-color: #4D90FE;
+			background-image: linear-gradient(top,#4D90FE, #4787ED);
+			background-image: -ms-linear-gradient(top,#4D90FE, #4787ED);
+			background-image: -o-linear-gradient(top,#4D90FE, #4787ED);
+			background-image: linear-gradient(top,#4D90FE, #4787ED);
+			border: 1px solid #4787ED;
+			box-shadow: 0 1px 3px #BFBFBF;
+		}
+		a.button{
+			color: #fff;
+		}
+		.button:hover{
+			box-shadow: inset 0px 1px 1px #8C8C8C;
+		}
+		.button.disabled{
+			box-shadow:none;
+			opacity:0.7;
+		}
+    canvas{
+      display: block;
+    }
+		</style>
+
+</div>';
+
+*/
+
 
 
 
@@ -879,21 +1252,22 @@ echo'
 
   $chat_text=$_POST['chat_text'];
 
-
-    $chat_text = htmlspecialchars($chat_text);
-   $chat_text = trim($chat_text);
+  $chat_text = htmlspecialchars($chat_text);
+  $chat_text = trim($chat_text);
   $chat_text = stripslashes($chat_text);
   $chat_text = $conn->real_escape_string($chat_text); 
-
- 
 
   $i = substr(str_shuffle(str_repeat("0123456789", 10)), 0, 10);
 
   $ip_from = $_SERVER['REMOTE_ADDR'];
   
 
+   $both_from = $_SESSION['login'];
+   $both = $both_from."_".$both_to;
+   
+
  $sql2="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','request$i','request$i','$finger')";
+         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','$both','request$i','$finger')";
   $result2=$conn->query($sql2);
 
 
@@ -902,11 +1276,10 @@ echo'
 
 
         $sql3="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','request$i','request$i','$finger')";
+         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','$both','request$i','$finger')";
   $result3=$conn->query($sql3);
-        
-         
-                    exit();
+
+          
                           }
                      
 
@@ -915,12 +1288,9 @@ echo'
                echo '<script type="text/javascript">alert("Error! Can not be sent message");
               </script>';
                           }  
-                       
-             
-   
-
+                        
                      
-     }  // end of if send message
+      }  // end of if send message
 
 
 
@@ -971,10 +1341,11 @@ echo'
   $ip_from2 = $_SERVER['REMOTE_ADDR'];
   $i2 = substr(str_shuffle(str_repeat("0123456789", 10)), 0, 10);
   
-
+ $both_from = $_SESSION['login'];
+   $both = $both_from."_".$both_to;
 
   $sql5="INSERT INTO chat (id2,_from,ip_from,_to,multimedia_name,multimedia_type,multimedia_size,multimedia_data,created,request,request_both,request_time,fingerprint)  
-         VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','request$i2','request$i2','$finger')";
+         VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','$both','request$i2','$finger')";
   $result5=$conn->query($sql5);
 
 
@@ -984,7 +1355,7 @@ echo'
 
 
   $sql6="INSERT INTO backup_chat (id2,_from,ip_from,_to,multimedia_name,multimedia_type,multimedia_size,multimedia_data,created,request,request_both,request_time,fingerprint)  
-         VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','request$i2','request$i2','$finger')";
+         VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','$both','request$i2','$finger')";
   $result6=$conn->query($sql6);
 
          //  echo '<script type="text/javascript">alert("Your file has been sent successfully");
@@ -1004,10 +1375,46 @@ echo'
             
                 
        } // end of insert photo
+      
+
+     } // end of authentication of conversastions
+
+ 
 
 
+    else
+      {
 
+      echo "<div align='center' style='background-color:; color:#1F59D9; height:90%; width:100%;'> 
+                  
+              <h2> <b> Error 404 </b> </h2>
 
+             <h2> <b> You do not have access to this conversation !!! </b> </h2>
+ 
+               <br><br><br>
+
+              <img src='photos/linux.png' height='40%' width='20%'>
+
+         <div class='footer'>
+    
+          <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+           <div class='progress-bar'>
+           <span class='progress-bar-fill' style='width: 1%'></span>
+          </div>
+
+         <script>
+           $('.progress-bar-fill').delay(1000).queue(function () {
+           $(this).css('width', '100%')
+          });
+        </script>   
+
+         </div>          
+
+            </div>";
+
+      exit;
+       }
+ 
 
 
    } // end of else data

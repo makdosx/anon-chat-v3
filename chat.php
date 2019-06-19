@@ -277,6 +277,15 @@ margin: 35px auto;
 .form-control::-ms-input-placeholder { color: black; text-align:center; }  /* Microsoft Edge */
 
 
+#avatar2
+{
+object-fit: cover;
+height: 150px;
+width: 160px;
+border-radius: 50%;
+}
+
+
 </style>
 
 
@@ -478,7 +487,9 @@ function openInNewTab(url) {
 
      <hr>
 
-
+     <div align="center">
+       <?php echo "<img id='avatar2' src='/avatars/{$_SESSION[login]}.png'>" ?>
+    </div>
 
 </body>
 </html>
@@ -513,58 +524,20 @@ function openInNewTab(url) {
    else
      {
          
+ 
          
-       echo"  <div id='footer'>
-             <div id='center'>
-
-        <form action='' method='POST'>
-
-        <div class='input-group'>
-        <span class='input-group-addon'><i class='glyphicon glyphicon-user'></i></span>
-        
-        <select class='form-control' data-show-subtext='true' data-live-search='true' name='user_request' 
-                style='width: 150px;'>";
-               
-        $sql0 = "select username from login order by username asc";    
-        $result0 = $conn->query($sql0);
-       
-        while ($row0 = $result0->fetch_assoc())
-               {
-       
-               $user_req = $row0['username'];
-               
-            echo  "<option data-tokens='$user_req' value='$user_req'> $user_req </option>";
-               
-               }
-            
-               echo "</select>
-          
-                    <button class='btn btn-primary btn-large btn-block' type='submit' name='submit_request'
-                    style='width: 140px;'> 
-               Send request
-                <i class='glyphicon glyphicon-send'></i>
-             </button>
-               
-         </div>
-
-
-  </form>
-
-  </div>
- </div>";
-
-         
-     
 
 
     // first place view users online and requests
 
 
+  /*
      echo '<div align="center">
       <iframe src="request_user.php" width="55%" height="300"
        style="opacity:1; box-shadow:none;" frameBorder="0"  scrolling="yes">
       </iframe>
        </div>';
+*/
 
 
 
@@ -577,148 +550,6 @@ function openInNewTab(url) {
        </div>';
 
    
-
-
-
-
-
-
-
-// second place send request
-
-  if(isset($_POST['submit_request']))   
-    {
-  
-
-    $user_request  = $_POST['user_request'];
-
-    $user_request = htmlspecialchars($user_request);
-    $user_request = trim($user_request);
-    $user_request = stripslashes($user_request);
-    $user_request = $conn->real_escape_string($user_request); 
-
-
-
-        $sql1 = "select username from login"; 
-        $result1 = $conn->query($sql1);
-
-
-        while ($row1 = $result1->fetch_assoc())       
-           {
-
-
-               
-     if ($user_request == $_SESSION['login'])
-     {
-    echo '<script type="text/javascript">alert("Cannot sent request to yourself!");
-         </script>';
-     echo ("<script>location.href='chat.php'</script>");
-       }
-
-
-
-
- 
-     else if ($row1['username'] == $user_request)
-       {
-
-        $sql2 = "select request_both from chat"; 
-        $result2 = $conn->query($sql2);
-
-      
-           $request_both_0 = $_SESSION['login'] ."_" .$user_request; 
-           $request_both_1 = $user_request ."_" .$_SESSION['login'];
-
-
-    $fingerprint = substr(str_shuffle(str_repeat("0123456789ABCDEF", 32)), 0, 32);
-
-    $id2 = substr(str_shuffle(str_repeat("0123456789", 4)), 0, 4);
-
-    $ip_from = $_SERVER['REMOTE_ADDR'];
-
-    $request_both = $_SESSION['login'] ."_" .$user_request; 
-
-
-     $default_message = "* anon-chat-v2 is a program that allows anonymous
-conversations . Use anon-chat-v2 from here:
-http://chat.openloadlinks.com *";
-  
-
- $sql3 ="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-       VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_0','1','$fingerprint');";
-
- //$sql3 .="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-    //      VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint');";
-
-$sql3.="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint,avatar) 
-         SELECT '$id2', '{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint', photo_data 
-         FROM avatar WHERE username = '{$_SESSION['login']}' ;";
-
-//$sql3 .="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-  //     VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','$default_message',NOW(),'$user_request','$request_both_0','1','$fingerprint');";
-
-
-//$sql3 .="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-  //     VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_0','1','$fingerprint');";
-
-
-$sql3.="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint,avatar) 
-         SELECT '$id2', '{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint', photo_data 
-         FROM avatar WHERE username = '{$_SESSION['login']}' ;";
-
-$sql3 .="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-          VALUES('$id2','{$_SESSION['login']}','$ip_from','$user_request','request_conversation',NOW(),'$user_request','$request_both_1','0','$fingerprint')";
-
-    $result3=$conn->multi_query($sql3);
-
- 
-
-   
-
-       if ($result3)
-              {    
-
-             $_SESSION['fingerprint'] = $fingerprint;
-              
-
- 
-            $ip_from = $_SERVER['REMOTE_ADDR'];
-
-
-
-         // echo "<script type='text/javascript'>alert('Success! Request sent to user $user_request');
-             // </script>";
-               echo ("<script>location.href='chat.php'</script>"); 
-                }
-                     
-
-
-                  else
-                    {  
-               echo '<script type="text/javascript">alert("Error! Can not be sent request");
-              </script>';
-               echo ("<script>location.href='chat.php'</script>"); 
-                          }  
-                       
-         
-
-
-                  }// end of else if check username exists
- 
-
-
-
-                } // end of while 
-
-              
-
-
-        }  // end of isset submit_request
-
-
-
-
-
 
 
 

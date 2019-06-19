@@ -37,7 +37,7 @@ session_start();
 if(isset($_POST['delete_submit']))
       {
 
-    $finger = $_GET['fingerprint'];
+    $both = $_GET['both'];
 
   require ('class_connect.php'); 
 
@@ -72,7 +72,7 @@ if(isset($_POST['delete_submit']))
 
 
 
-        $sql="DELETE FROM chat WHERE _from='".$_SESSION['login']."' and fingerprint='$finger' and message !='request_conversation'";
+        $sql="DELETE FROM chat WHERE _from='".$_SESSION['login']."' and request_both='$both' and message !='request_conversation'";
         $result=$conn->query($sql);
 
 

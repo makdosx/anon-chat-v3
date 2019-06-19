@@ -529,7 +529,7 @@ margin: 35px auto;
 
 
  echo '<div id="right_frame">
-      <iframe src="users_online_forum.php" width="180" height="400" 
+      <iframe src="users_online_forum.php" width="200" height="400" 
         style="opacity:1; box-shadow:none;" frameBorder="0">
       </iframe>
        </div>';
