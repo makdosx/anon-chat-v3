@@ -21,38 +21,38 @@ Anonymous electronic printouts because only text variables are allowed. (text va
 
 
 <tr>
-     <td> <img width="100" height="100" src="img/system_requirements.png"> </td>
+     <td> <img width="100" height="100" src="screenshots/system_requirements.png"> </td>
   <td> System requirements (quad core and more, 4gb ram and more) </td>
    </tr>
    
   <tr>
-   <td> <img align="left" width="100" height="100" src="img/os.jpg"> </td>
+   <td> <img align="left" width="100" height="100" src="screenshots/os.jpg"> </td>
    <td>  OS System: (Gnu/linux systems bellow) </td>
   </tr>
  
  <tr>
   <td> RPM-based (Red Hat Linux, CentOS, Fedora, openSUSE, Mandrake Linux etc) </td>     
-  <td>   <img width="100" height="100" src="img/rpm.png"> </td>   
+  <td>   <img width="100" height="100" src="screenshots/rpm.png"> </td>   
 </tr>
   
  <tr>
   <td> Debian-based </td>
-  <td> <img width="100" height="100" src="img/debian.jpg"> </td>
+  <td> <img width="100" height="100" src="screenshots/debian.jpg"> </td>
  </tr>
      
  <tr>    
   <td> MEPIS-based </td> 
-  <td> <img width="100" height="100" src="img/mepis.png"> </td> 
+  <td> <img width="100" height="100" src="screenshots/mepis.png"> </td> 
 </tr>
 
 <tr>
  <td> Gentoo-based </td>
-  <td> <img width="100" height="100" src="img/gentoo.jpg"> </td>
+  <td> <img width="100" height="100" src="screenshots/gentoo.jpg"> </td>
 </tr>
      
 <tr>     
   <td> Slackware-based </td>
-  <td> <img width="100" height="100" src="img/slackware.jpg"> </td>      
+  <td> <img width="100" height="100" src="screenshots/slackware.jpg"> </td>      
 </tr>
 
 </table>
