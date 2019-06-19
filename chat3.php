@@ -600,6 +600,34 @@ if (location.href.indexOf('read')==-1)
           $message = wordwrap($row['message'], 50, "<br>", true);
           
           
+          // echo emoticons
+
+              $emoticon = array(":)", ":D", ":(", ":'(", ":P", "O:)",
+                                "3:)", "o.O", ";)", ":O", "-_-", ">:O",
+                                ":*", "^_^", "8-)", "8|", ">:(", ":v",
+                                ":/", ":3", "<3", "(y)", "(^^^)", ":|]",
+                                ":poop:", ":putnam:", "like");
+
+              $emoticons = array("1.png" => ":)", "2.png" => ":D", "3.png" => ":(",
+                                 "4.png" => ":'(", "5.png" => ":P", "6.png" => "O:)",
+                                 "7.png" => "3:)", "8.png" => "o.O", "9.png" => ";)",
+                                 "10.png" => ":O", "11.png" => "-_-", "12.png" => ">:O", 
+                                 "13.png" => ":*", "14.png" => "^_^", "15.png" => "8-)",
+                                 "16.png" => "8|", "17.png" => ">:(", "18.png" => ":v",
+                                 "19.png" => ":/", "20.png" => ":3", "21.png" => "<3",
+                                 "22.png" => "(y)", "23.png" => "(^^^)", "24.png" => ":|]", 
+                                 "25.png" => ":poop:", "26.png" => ":putnam:", "like.png" => "like");
+
+            if (in_array($message, $emoticon)) 
+                   {                 
+
+                   $key = array_search($message, $emoticons); 
+ 
+                   $message = "<img src='emoticons/$key' height='25' width='25'>";
+
+                     }
+
+
          $mutimedia_name_0 = $row['multimedia_name'];
          $mutimedia_name = wordwrap($mutimedia_name_0, 50, "<br>", true);
 

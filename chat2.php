@@ -835,9 +835,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
           $message = wordwrap($row['message'], 50, "<br>", true);
 
 
-            // echo emoticons
-            // :) - :D - :( - :'( -
-
+              // echo emoticons
 
               $emoticon = array(":)", ":D", ":(", ":'(", ":P", "O:)",
                                 "3:)", "o.O", ";)", ":O", "-_-", ">:O",
