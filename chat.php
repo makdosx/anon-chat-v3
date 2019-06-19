@@ -487,9 +487,17 @@ function openInNewTab(url) {
 
      <hr>
 
+
+    <!--
      <div align="center">
        <?php echo "<img id='avatar2' src='/avatars/{$_SESSION[login]}.png'>" ?>
     </div>
+    -->
+
+      <div align="center">
+       <?php echo "<img src='photos/3.gif' height='350' width='350'>" ?>
+    </div>
+
 
 </body>
 </html>
