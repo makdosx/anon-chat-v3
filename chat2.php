@@ -104,9 +104,10 @@ word-wrap: break-word;
 word-break: break-word;
 background:#DBD8F8;
 color:black;
-border-style:solid;
-border-width:0.2em;
-border-color:silver;
+border-style:none;
+
+outline:none;
+
 }
 
 
@@ -306,7 +307,7 @@ background-color:#4080FF;
 border-style:solid;
 border-width:0.3em; 
 border-color:#4080FF;
-border-radius: 25px;
+border-radius: 10px;
 width: 100%; 
 }
 
@@ -318,7 +319,7 @@ background-color:#F1F0F0;
 border-style:solid;
 border-width:0.3em; 
 border-color:#F1F0F0;
-border-radius: 25px;
+border-radius: 10px;
 width: 100%; 
 }
 
@@ -550,6 +551,26 @@ li {
 
 
 
+#delete_one
+{
+height:15px;
+width: 15px;
+float: right; 
+filter: gray; /* IE5+ */
+-webkit-filter: grayscale(100); /* Webkit Nightlies & Chrome Canary */
+-webkit-transition: all ease-in-out;  
+}
+
+
+#delete_one:hover
+{
+float: right; 
+filter: none;
+-webkit-filter: grayscale(0);
+-webkit-transform: scale(1.01);
+}
+
+
 </style>
 
 
@@ -589,9 +610,10 @@ $(function() {
 
 
 
+
 <script type="text/javascript">
         document.getElementById("txt_1").value = getSavedValue("txt_1");    // set the value to this input
-        document.getElementById("txt_2").value = getSavedValue("txt_2");   // set the value to this input
+       // document.getElementById("txt_2").value = getSavedValue("txt_2");   // set the value to this input
         /* Here you can add more inputs to set value. if it's saved */
 
         //Save the value function - save it to localStorage as (ID, VALUE)
@@ -613,30 +635,41 @@ $(function() {
 
 
 
-
 <script type="text/javascript">
 
 
 var time = new Date().getTime();
 
-var refreshTime = 100;
+
+var refreshTime = 500;
 
 $(document).bind("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error hover change", function (e) {
     time = new Date().getTime();
 });
 
 function refresh() {
-    if (new Date().getTime() - time >= refreshTime) {
-        $('#reload').load("#reload1");
+    if (new Date().getTime() - time >= refreshTime) 
+    {
+   $("#reload").load("#reload1");
 
-    } else {
+    } 
+    
+    
+    else {
         setTimeout(refresh, refreshTime);
     }
+    
+    
 }
 
 setTimeout(refresh, refreshTime);
-    
+
+
 </script>
+
+
+
+
 
 
 
@@ -647,6 +680,21 @@ setTimeout(refresh, refreshTime);
 <br><br>
 
 <body>
+    
+    
+    <a href="javascript:close_window();" id="close_tab"><img src="/photos/close.png" id="img_close" title="close conversation"></a>
+
+
+
+  <script>
+    function close_window() 
+      {
+     if (confirm("Do you want to close this conversation?"))
+        {
+    close();
+       }
+     }
+ </script>
 
 </body>
 </html>
@@ -680,7 +728,6 @@ setTimeout(refresh, refreshTime);
 
    else
      {
-
 
 
    
@@ -717,7 +764,9 @@ setTimeout(refresh, refreshTime);
         $request_both2_2 = explode("_", $request_both2, 2);
         $request_both2_2 = $request_both2_2[0];
 
-        //echo $request_both1 ."<br>" .$request_both2;
+       // echo $request_both1 ."<br>" .$request_both2 ."<br>";
+
+      //  echo $request_both1_1 ."<br>" .$request_both2_2;
 
 
      
@@ -727,22 +776,6 @@ setTimeout(refresh, refreshTime);
 
 
        $_SESSION['both'] = $both;
-   
-
-
- echo' <a href="javascript:close_window();" id="close_tab"><img src="/photos/close.png" id="img_close" title="close conversation"></a>
-
-
-
-  <script>
-    function close_window() 
-      {
-     if (confirm("Do you want to close this conversation?"))
-        {
-    close();
-       }
-     }
- </script>';
 
 
 
@@ -776,23 +809,27 @@ setTimeout(refresh, refreshTime);
 
 
 
+/*
+
  $sql_id="select id from chat where (request_both = '$request_both1' or request_both = '$request_both2')
           and message!='request_conversation' order by id desc";
  $result_id=$conn->query($sql_id);
   $row_id = $result_id->fetch_assoc();
       $last_id = $row_id['id'];
       //echo $last_id; 
-   
+  */
   
 
  $sql="select * from chat where (request_both = '$request_both1' or request_both = '$request_both2') 
-and message!='request_conversation' and id <= '$last_id' order by id desc limit 20";
+and message!='request_conversation' order by id desc ";
  $result=$conn->query($sql);
 
         
-        echo '<div id="reload">
-              <div id="reload1">
-              <table class="table4">';
+        
+      
+             echo '<div id="reload">
+                   <div id="reload1">
+                   <table class="table4">';
  
      
   //$sql2="select photo_data from profile 
@@ -801,7 +838,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
 
   
             echo "<td id='td_default_mess'>
-                    <a href='chat3.php?both=$both'> view all messages </>
+                    <a href='chat_lite.php?both=$both'> Messenger Lite </>
                     <font color='white'> <hr id='hr'> </font> 
               </td>";
 
@@ -928,6 +965,13 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
                           <font color='black'> $mutimedia_name </font>
                         </a>";
         
+        
+          $delete_one = "<form action='' method='post' style='float:right;'>
+                          <button type='submit' name='delete_one' value='$id' 
+                           style='background:none!important; border:none; padding:0!important; font-family:arial,sans-serif; color:#069; text-decoration:underline; cursor:pointer;'>
+                          <img src='photos/delete2.png' id='delete_one'>
+                          </button>
+                        </form> ";
 
 
 
@@ -937,7 +981,8 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
               if  ($message != null)
                    { 
                     $mes = "<td id='td_mess'>
-                    <font color='white'>  $avatar $date $time <br>  $message </b> </font> 
+                    <font color='white'>  $avatar $date $time $delete_one <br> 
+                       $message </b> </font> 
               </td>";
                  }
                 
@@ -947,7 +992,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view </b> </font> 
+         <font color='white'> $avatar $date $time $delete_one  <br>  <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -959,7 +1004,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view </b> </font> 
+         <font color='white'> $avatar $date $time $delete_one <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -971,7 +1016,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
             if  ($multimedia_size > 0)
                {
          $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view </b> </font> 
+         <font color='white'> $avatar $date $time $delete_one <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view </b> </font> 
               </td>";  
                 }
                }
@@ -982,7 +1027,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view </b> </font> 
+         <font color='white'> $avatar $date $time $delete_one <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -993,7 +1038,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view </b> </font> 
+         <font color='white'> $avatar $date $time $delete_one  <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view </b> </font> 
               </td>";
                    }
                 }
@@ -1012,7 +1057,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
               if  ($message != null)
                    { 
                 $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time <br>  $message </b> </font> 
+         <font color='black'> $avatar $date $time $delete_one <br>  $message </b> </font> 
               </td>";
                  }
                 
@@ -1022,7 +1067,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time <br> <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time $delete_one  <br> <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1033,7 +1078,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='black'> $avatar $date $time <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time $delete_one  <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1045,7 +1090,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
             if  ($multimedia_size > 0)
                {
          $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time $delete_one  <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view2 </b> </font> 
               </td>";  
                 }
                }
@@ -1056,7 +1101,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='black'> $avatar $date $time <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time $delete_one <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1068,7 +1113,7 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view2 </b> </font> 
+         <font color='white'> $avatar $date $time $delete_one <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1084,8 +1129,9 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
 
             } // end of while chat
 
-    echo '</table> </div> </div>';;
+    echo '</table> </div> </div>';
           
+
 
 
 
@@ -1096,26 +1142,17 @@ and message!='request_conversation' and id <= '$last_id' order by id desc limit 
          </div>";
 
 
+
 echo'
  <div align="center">
   <form action="" method="POST" class="form1" autocomplete="off">
       <br><br>
-   <textarea class="chat" name="chat_text" maxlength="512" autofocus="autofocus"  id="textarea" required></textarea>
+   <input class="chat" name="chat_text" maxlength="512" autofocus="autofocus" id="txt_1" required>
     <br><br>
   <input type="hidden" name="chat_submit" value="Send" id="button">
   </form>
   </div>
 
-
-<script>
-$("#textarea").keypress(function (e) {
-    if(e.which == 13 && !e.shiftKey) {        
-        $(this).closest("form").submit();
-        e.preventDefault();
-        return false;
-    }
-});
-</script>
 
 
     <div id="footer">
@@ -1177,7 +1214,18 @@ span.onclick = function() {
 </div>';
 
 
+
 /*
+
+<script>
+$("#txt_1").keypress(function (e) {
+    if(e.which == 13 && !e.shiftKey) {        
+        $(this).closest("form").submit();
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
 
       <a class="button recordButton" id="record">Record</a>
       <a class="button disabled one" id="pause">Pause</a>
@@ -1223,6 +1271,18 @@ span.onclick = function() {
 
 */
 
+
+
+
+  if (isset($_POST['delete_one']))
+     {
+         
+        $id_delete = $_POST['delete_one']; 
+         
+        $sql="DELETE FROM chat WHERE id='$id_delete' and message !='request_conversation'";
+        $result=$conn->query($sql);
+             
+     }
 
 
 
@@ -1420,8 +1480,6 @@ span.onclick = function() {
   $conn->commit();
 
   $conn->close();
-   
 
 
 ?>
-

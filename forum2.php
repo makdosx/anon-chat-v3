@@ -287,7 +287,7 @@ width: 500px;
 
 <script type="text/javascript">
         document.getElementById("txt_1").value = getSavedValue("txt_1");    // set the value to this input
-        document.getElementById("txt_2").value = getSavedValue("txt_2");   // set the value to this input
+        //document.getElementById("txt_2").value = getSavedValue("txt_2");   // set the value to this input
         /* Here you can add more inputs to set value. if it's saved */
 
         //Save the value function - save it to localStorage as (ID, VALUE)
@@ -564,7 +564,7 @@ echo $conn->error;
  echo'<div align="center">
   <form action="" method="POST" id="form1">
       <br><br>
-   <input type="text"  class="chat" name="forum_text" maxlength="512" autofocus="autofocus" required>
+   <input type="text"  class="chat" name="forum_text" maxlength="512" id="txt_1" autofocus="autofocus" required>
     <br><br>
   <input type="hidden" name="forum_submit" value="Send" id="button">
   </form>
