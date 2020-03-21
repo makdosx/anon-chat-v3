@@ -168,6 +168,7 @@ font-size:13px;
 position: fixed;
 top:1%;
 left:5%;
+height:100%;
 width:90%;
 font-size:30px;
 background-color:;
@@ -182,6 +183,7 @@ text-align:center;
 position:fixed;
 top:1%;
 left:5%;
+height:100%;
 width:90%;
 font-size:30px;
 background-color:;
@@ -886,7 +888,7 @@ and message!='request_conversation' order by id desc ";
                                  "10.png" => ":O", "11.png" => "-_-", "12.png" => ">:O", 
                                  "13.png" => ":*", "14.png" => "^_^", "15.png" => "8-)",
                                  "16.png" => "8|", "17.png" => ">:(", "18.png" => ":v",
-                                 "19.png" => ":/", "20.png" => ":3", "21.png" => "<3",
+                                 "19.png" => ":/", "20.png" => "<3", "21.png" => "<3",
                                  "22.png" => "(y)", "23.png" => "(^^^)", "24.png" => ":|]", 
                                  "25.png" => ":poop:", "26.png" => ":putnam:", "like.png" => "like");
 
