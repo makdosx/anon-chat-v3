@@ -169,11 +169,7 @@ CREATE TABLE `users_activities` (
 -- Dumping data for table `users_activities`
 --
 
-INSERT INTO `users_activities` (`id`, `username`, `ip_addr`, `browser`, `log_in_time`, `log_out_time`, `fingerprint`) VALUES
-(181, 'vasou', '::1', 'Google Chrome 73.0.3683.86 on Gnu/linux reports', '2019-05-25 22:31:14', '0000-00-00 00:00:00', 'E082436D58D4566BDB763CCFFC565C1C'),
-(182, 'gerasimos', '::1', 'Google Chrome 73.0.3683.86 on Gnu/linux reports', '2019-05-25 22:32:56', '0000-00-00 00:00:00', '4C7EFF2E69817E7591B9956BFEBC3962');
 
--- --------------------------------------------------------
 
 --
 -- Table structure for table `users_online`
