@@ -115,6 +115,14 @@ $password=md5($_POST['password']);
 
  else 
   {
+	 //katagrafh drastioriothtas
+ 
+       $ip_addr = $_SERVER['REMOTE_ADDR'];
+       $path = $_SERVER['REQUEST_URI'];
+
+    $sql="insert log_file (username,ip_addr,path,connect) values('".$_SESSION['login']."','$ip_addr','$path',NOW())";
+    $result=$conn->query($sql); 
+ 
   header('Location: index.php');
   }
 

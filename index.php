@@ -27,7 +27,7 @@
 
   require ('class_connect.php'); 
 
-
+session_start();
 
 ?>
 
@@ -224,7 +224,7 @@ background-size: 30%,  30%, cover;
      } 
  
 
-
+/*
    else
      {
 
@@ -238,7 +238,7 @@ background-size: 30%,  30%, cover;
 
 
      }
-
+*/
 
     $conn->close();
 

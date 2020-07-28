@@ -817,7 +817,7 @@ and message!='request_conversation' order by id desc ";
               if  ($message != null)
                    { 
                     $mes = "<td id='td_mess'>
-                    <font color='white'>  $avatar $date $time $delete_one <br> 
+                    <font color='white'>  $avatar $date $time  <br> 
                        $message </b> </font> 
               </td>";
                  }

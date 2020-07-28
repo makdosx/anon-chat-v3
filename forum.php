@@ -20,6 +20,7 @@
  *
  */
 
+error_reporting(0);
 
  session_start();
 
@@ -478,7 +479,6 @@ margin: 35px auto;
 
 <?php
 
- session_start();
 
  if (!isset($_SESSION['login']))
     {

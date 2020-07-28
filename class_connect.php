@@ -30,9 +30,9 @@
      public function __construct()
       {
        $this->connect[0]="localhost";
-       $this->connect[1]="anon-chat";
-       $this->connect[2]="anon-chat";
-       $this->connect[3]="anon-chat";
+       $this->connect[1]="chat2";
+       $this->connect[2]="chat2";
+       $this->connect[3]="chat2";
 
      } 
  
