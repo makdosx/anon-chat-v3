@@ -217,7 +217,6 @@ ALTER TABLE `backup_login`
 --
 ALTER TABLE `chat`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `request_both` (`request_both`);
 
 --
 -- Indexes for table `forum`
