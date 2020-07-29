@@ -608,7 +608,7 @@ filter: none;
 var time = new Date().getTime();
 
 
-var refreshTime = 300;
+var refreshTime = 2000;
 
 $(document).bind("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error hover change", function (e) {
     time = new Date().getTime();
@@ -835,7 +835,7 @@ and message!='request_conversation' order by id desc ";
               if  ($message != null)
                    { 
                 $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time $delete_one <br>  $message </b> </font> 
+         <font color='black'> $avatar $date $time  <br>  $message </b> </font> 
               </td>";
                  }
         

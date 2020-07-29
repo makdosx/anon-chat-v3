@@ -643,7 +643,7 @@ $(function() {
 var time = new Date().getTime();
 
 
-var refreshTime = 500;
+var refreshTime = 1000;
 
 $(document).bind("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error hover change", function (e) {
     time = new Date().getTime();

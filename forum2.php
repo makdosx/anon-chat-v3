@@ -322,7 +322,7 @@ width: 500px;
 
 var time = new Date().getTime();
 
-var refreshTime =  100;
+var refreshTime =  1000;
 
 $(document).bind("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error hover change", function (e) {
     time = new Date().getTime();
@@ -525,7 +525,9 @@ echo $conn->error;
              if ($row['_from'] == $_SESSION['login'])
                 {
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time <br> $message </b> </font> 
+                 <font color='white'> $avatar </font>
+				  <font color='orange'> <b> $from </b> </font> 
+				  <font color='white'> $date $time  <br>  $message </b> </font> 
               </td>";
                  }
       
@@ -534,7 +536,9 @@ echo $conn->error;
               if ($row['_from'] != $_SESSION['login'])
                 {
                 $mes = "<td id='td_mess2'> 
-              <font color='black'> $avatar $date $time <br> $message </b> </font> 
+              <font color='black'> $avatar </font> 
+			  <font color='orange'> <b> $from </b> </font> 
+			  <font color='black'> $date $time <br> $message </b> </font> 
               </td>";
                  }
 
