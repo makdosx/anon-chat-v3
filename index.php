@@ -158,13 +158,14 @@ background-size: 30%,  30%, cover;
 
 
 
-
-          <div class="field-wrap">
+           <div class="field-wrap">
             <label>
-              Email Address<span class="req">*</span>
+              <span class="req"> End-to-end encryption (E2EE) </span>
             </label>
-            <input type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Example: mail@mail.com" required autocomplete="off"/>
+            <input type="text" name="_key" autocomplete="off" disabled/>
           </div>
+          
+          
           
           <div class="field-wrap">
             <label>

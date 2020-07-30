@@ -466,11 +466,11 @@ setTimeout(refresh, refreshTime);
 
 
 
-
-
 $sql="select * from forum where theme='$theme' and message!='request_theme' order by id desc";
 $result=$conn->query($sql);
 echo $conn->error;
+
+
         
            if(!$result)
              {
@@ -514,7 +514,10 @@ echo $conn->error;
                    
                   $from = $row['_from'];
                   
-                  $message = wordwrap($row['message'], 50, "<br>", true);
+                   $message = wordwrap($row['message'], 50, "<br>", true);
+                   $private_key_dec = $PRIVATE_KEY;
+                   $dec_text  = openssl_decrypt($message,"AES-256-CBC",$private_key_dec);
+                   $message = $dec_text;
 
 
 
@@ -614,9 +617,14 @@ echo $conn->error;
 
  
    $session_login = $_SESSION['login'];
+   
+   $enc_text = $forum_text;
+   $private_key_dec = $PRIVATE_KEY;
+  
+   $encrypted_text  = openssl_encrypt($forum_text,"AES-256-CBC",$private_key_dec);
 
   $sql2="INSERT INTO forum (creator, theme, created, _from, ip_from, _to, message) 
-         VALUES ('$creator', '$theme', NOW(), '$_from', '$ip_from', 'forum', '$forum_text')";
+         VALUES ('$creator', '$theme', NOW(), '$_from', '$ip_from', 'forum', '$encrypted_text')";
   $result2=$conn->query($sql2);
 
 
@@ -626,9 +634,9 @@ echo $conn->error;
         // $sql3="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message) 
               //   VALUES('$creator','$theme', NOW(), '$creator', '$ip_from', 'forum','$forum_text')";
         
-         $sql3="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message) 
-                VALUES('$creator', '$theme', NOW(),'$_from', '$ip_from' ,'forum' ,'$forum_text')";
-         $result3=$conn->query($sql3);
+         //$sql3="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message) 
+        //        VALUES('$creator', '$theme', NOW(),'$_from', '$ip_from' ,'forum' ,'$forum_text')";
+        // $result3=$conn->query($sql3);
  
 
                 // echo ("<script>location.href='forum.php'</script>"); 

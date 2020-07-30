@@ -672,6 +672,8 @@ setTimeout(refresh, refreshTime);
 
 
   require ('class_connect.php'); 
+  require ('private_key.php');
+  
 
     $obj = new in();
 
@@ -764,7 +766,7 @@ setTimeout(refresh, refreshTime);
 
 
  $sql="select * from chat where (request_both = '$request_both1' or request_both = '$request_both2') 
-and message!='request_conversation' order by id desc ";
+and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 30 MINUTE order by id desc ";
  $result=$conn->query($sql);
 
         
@@ -808,6 +810,9 @@ and message!='request_conversation' order by id desc ";
           $to   =  $row['_to']; 
           
           $message = wordwrap($row['message'], 50, "<br>", true);
+          $private_key_dec = $PRIVATE_KEY;
+          $dec_text  = openssl_decrypt($message,"AES-256-CBC",$private_key_dec);
+          $message = $dec_text;
 
 
 
@@ -909,9 +914,14 @@ and message!='request_conversation' order by id desc ";
    $both_from = $_SESSION['login'];
    $both = $both_from."_".$both_to;
    
+    $enc_text = $chat_text;
+   $private_key_enc = $PRIVATE_KEY;
+  
+   $encrypted_text  = openssl_encrypt($enc_text,"AES-256-CBC",$private_key_enc);
+   
 
  $sql2="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','$both','request$i','$finger')";
+         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$encrypted_text',NOW(),'request$i','$both','request$i','$finger')";
   $result2=$conn->query($sql2);
 
 
@@ -919,9 +929,9 @@ and message!='request_conversation' order by id desc ";
               {    
 
 
-        $sql3="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','$both','request$i','$finger')";
-  $result3=$conn->query($sql3);
+       // $sql3="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
+      //   VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$encypted_text',NOW(),'request$i','$both','request$i','$finger')";
+ // $result3=$conn->query($sql3);
          
                           }
                      

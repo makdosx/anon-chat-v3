@@ -20,6 +20,7 @@
  *
  */
 
+session_start();
 
 ?>
 
@@ -142,8 +143,6 @@ width:1em;
 <?php
 
 
- session_start();
-
  if (!isset($_SESSION['login']))
     {
       header("Location: index.php");
@@ -195,7 +194,7 @@ width:1em;
 
            else
               {
-          
+        
 
         echo '<table id=table3>
                 <tr>

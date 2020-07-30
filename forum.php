@@ -571,8 +571,8 @@ margin: 35px auto;
        VALUES('$creator', '$theme', NOW(), '$creator', '$ip_from', 'forum', 'request_theme');";
 
 
-  $sql3 .="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message) 
-       VALUES('$creator', '$theme', NOW(), '$creator', '$ip_from','forum', 'request_theme')";
+  //$sql3 .="INSERT INTO backup_forum (creator, theme, created, _from, ip_from, _to, message) 
+   //    VALUES('$creator', '$theme', NOW(), '$creator', '$ip_from','forum', 'request_theme')";
 
 
     $result3=$conn->multi_query($sql3);

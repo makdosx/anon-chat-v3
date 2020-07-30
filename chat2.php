@@ -675,9 +675,13 @@ setTimeout(refresh, refreshTime);
 
 
 
-</head>
+
+
+
+
 
 </head>
+
 
 <br><br>
 
@@ -708,6 +712,7 @@ setTimeout(refresh, refreshTime);
 
 
   require ('class_connect.php'); 
+  require ('private_key.php');
 
     $obj = new in();
 
@@ -730,8 +735,6 @@ setTimeout(refresh, refreshTime);
 
    else
      {
-
-
    
   $scheme = $_SERVER['REQUEST_SCHEME'] . '://' .$_SERVER['SERVER_NAME'] .$_SERVER['REQUEST_URI'];
 
@@ -766,9 +769,9 @@ setTimeout(refresh, refreshTime);
         $request_both2_2 = explode("_", $request_both2, 2);
         $request_both2_2 = $request_both2_2[0];
 
-       // echo $request_both1 ."<br>" .$request_both2 ."<br>";
+      //  echo $request_both1 ."<br>" .$request_both2 ."<br>";
 
-      //  echo $request_both1_1 ."<br>" .$request_both2_2;
+       // echo $request_both1_1 ."<br>" .$request_both2_2;
 
 
      
@@ -776,9 +779,7 @@ setTimeout(refresh, refreshTime);
           if ($request_both1_1 == $_SESSION['login'] or $request_both2_2 == $_SESSION['login'])            
                {
 
-
-       $_SESSION['both'] = $both;
-
+           $_SESSION['both'] = $both;
 
 
           if ($_from == $_SESSION['login'])
@@ -823,7 +824,7 @@ setTimeout(refresh, refreshTime);
   
 
  $sql="select * from chat where (request_both = '$request_both1' or request_both = '$request_both2') 
-and message!='request_conversation' order by id desc ";
+and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 30 MINUTE order by id desc";
  $result=$conn->query($sql);
 
         
@@ -859,6 +860,7 @@ and message!='request_conversation' order by id desc ";
 
           $time = substr($row['created'], -8, 5);
           
+    
           $from =  $row['_from'];
           
           //$user_avatar = $_SESSION['login'];
@@ -872,6 +874,12 @@ and message!='request_conversation' order by id desc ";
           $to   =  $row['_to']; 
           
           $message = wordwrap($row['message'], 50, "<br>", true);
+          $private_key_dec = $PRIVATE_KEY;
+          $dec_text  = openssl_decrypt($message,"AES-256-CBC",$private_key_dec);
+          $message = $dec_text;
+          
+
+
 
 
               // echo emoticons
@@ -1129,6 +1137,7 @@ and message!='request_conversation' order by id desc ";
         echo "<tr id ='tr_mess'> $mes </tr>";
 
 
+
             } // end of while chat
 
     echo '</table> </div> </div>';
@@ -1325,9 +1334,16 @@ $("#txt_1").keypress(function (e) {
    $both_from = $_SESSION['login'];
    $both = $both_from."_".$both_to;
    
+   
+   $enc_text = $chat_text;
+   $private_key_enc = $PRIVATE_KEY;
+  
+   $encrypted_text  = openssl_encrypt($enc_text,"AES-256-CBC",$private_key_enc);
+
+   
 
  $sql2="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','$both','request$i','$finger')";
+         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$encrypted_text',NOW(),'request$i','$both','request$i','$finger')";
   $result2=$conn->query($sql2);
 
 
@@ -1335,9 +1351,9 @@ $("#txt_1").keypress(function (e) {
               {    
 
 
-        $sql3="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','$both','request$i','$finger')";
-  $result3=$conn->query($sql3);
+        //$sql3="INSERT INTO backup_chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
+         //VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$chat_text',NOW(),'request$i','$both','request$i','$finger')";
+  //$result3=$conn->query($sql3);
 
           
                           }
@@ -1414,9 +1430,9 @@ $("#txt_1").keypress(function (e) {
               {    
 
 
-  $sql6="INSERT INTO backup_chat (id2,_from,ip_from,_to,multimedia_name,multimedia_type,multimedia_size,multimedia_data,created,request,request_both,request_time,fingerprint)  
-         VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','$both','request$i2','$finger')";
-  $result6=$conn->query($sql6);
+ // $sql6="INSERT INTO backup_chat (id2,_from,ip_from,_to,multimedia_name,multimedia_type,multimedia_size,multimedia_data,created,request,request_both,request_time,fingerprint)  
+  //       VALUES('$id3','{$_SESSION['login']}','$ip_from2','chat','$multimedia_name','$multimedia_type','$multimedia_size','$multimedia_data',NOW(),'request$i2','$both','request$i2','$finger')";
+  //$result6=$conn->query($sql6);
 
          //  echo '<script type="text/javascript">alert("Your file has been sent successfully");
                  // </script>';
@@ -1478,6 +1494,10 @@ $("#txt_1").keypress(function (e) {
 
 
    } // end of else data
+   
+      
+   
+   
 
   $conn->commit();
 

@@ -24,9 +24,9 @@
     public function __construct()
         {
          $this->connect[0]="localhost";
-         $this->connect[1]="chat2";
-         $this->connect[2]="chat2";
-         $this->connect[3]="chat2";
+         $this->connect[1]="ixxtlntj_anbs";
+         $this->connect[2]="perla1!Aaa";
+         $this->connect[3]="ixxtlntj_anbs";
            }
       } // end of coonect class
   
@@ -36,9 +36,9 @@
         public function __construct()
            {
          $this->connect[0]="localhost";
-         $this->connect[1]="chat2";
-         $this->connect[2]="chat2";
-         $this->connect[3]="chat2";
+         $this->connect[1]="ixxtlntj_anbs";
+         $this->connect[2]="perla1!Aaa";
+         $this->connect[3]="ixxtlntj_anbs";
          } // end of class extends of connect with parent and child
          }
           

@@ -60,27 +60,19 @@
 
        $username = htmlspecialchars($username);
     $password = htmlspecialchars($password);
-   $email = htmlspecialchars($email);
-   $username = trim($username);
+-   $username = trim($username);
    $password = trim($password);
-   $email = trim($email);
    $username = stripslashes($username);
   $password = stripslashes($password);
-  $email = stripslashes($email);
   $username = $conn->real_escape_string($username);
   $password = $conn->real_escape_string($password); 
-  $email = $conn->real_escape_string($email);
 
 
 
  $sql1="SELECT * FROM login WHERE username='$username'";
- $sql2="SELECT * FROM login WHERE email='$email'";
 
  $result1=$conn->query($sql1);
- $result2=$conn->query($sql2);
-
  
-
 
   if (($result1->num_rows)>0)
      {
@@ -89,14 +81,6 @@
      echo ("<script>location.href='index.php'</script>");
        }
 
-
-
-    else if (($result2->num_rows)>0)
-     {
-    echo '<script type="text/javascript">alert("This email exists. Please isnert an another email");
-         </script>';
-     echo ("<script>location.href='index.php'</script>");
-       }
 
 
 
@@ -111,8 +95,8 @@
       $_SESSION['qrcode'] = $qrcode;
 
 
-   $sql3 = "INSERT INTO login (username,password,email,is_inside, verification_code, verified) 
-            VALUES ('$username','$password','$email','no','$qrcode','no')";
+   $sql3 = "INSERT INTO login (username,password, is_inside, verification_code, verified) 
+            VALUES ('$username','$password','no','$qrcode','no')";
    $result3=$conn->query($sql3);
 
 
@@ -120,7 +104,7 @@
 if (($result3) === TRUE) 
       {
 
-     $sql4="INSERT INTO backup_login (username,password,email,is_inside) VALUES ('$username','$password','$email','no')";
+     $sql4="INSERT INTO backup_login (username,password,is_inside) VALUES ('$username','$password','no')";
      $result4=$conn->query($sql4);
 
 
