@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Copyright (c) 2016-2019 Barchampas Gerasimos <http://chat.openloadlinks.com>
- * anon-chat-v2 is a program that allows anonymous conversations.
+ * Copyright (c) 2016-2020 Barchampas Gerasimos 
+ * anon-chat-v3 is a program that allows anonymous conversations.
  *
  * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -125,7 +125,7 @@ width:17em;
 {
 position:fixed;
 bottom:11%;
-right:40%;
+left:38%;
 width:20%;
 text-decoration:none;
 display:inline-block;
@@ -146,7 +146,7 @@ font-size:13px;
 {
 position:fixed;
 bottom:11%;
-right:40%;
+left:38%;
 width:20%;
 text-decoration:none;
 background-color:white;
@@ -167,7 +167,7 @@ font-size:13px;
 {
 position: fixed;
 top:1%;
-left:5%;
+left:3%;
 width:90%;
 font-size:30px;
 background-color:;
@@ -181,7 +181,7 @@ text-align:center;
 {
 position:fixed;
 top:1%;
-left:5%;
+left:3%;
 width:90%;
 font-size:30px;
 background-color:;
@@ -308,7 +308,7 @@ border-style:solid;
 border-width:0.3em; 
 border-color:#4080FF;
 border-radius: 10px;
-width: 100%; 
+
 }
 
 
@@ -553,10 +553,10 @@ li {
 
 #delete_one
 {
-height:15px;
-width: 15px;
+height:20px;
+width: 20px;
 float: right; 
-filter: gray; /* IE5+ */
+filter: ; /* IE5+ */
 -webkit-filter: grayscale(100); /* Webkit Nightlies & Chrome Canary */
 -webkit-transition: all ease-in-out;  
 }
@@ -567,7 +567,7 @@ filter: gray; /* IE5+ */
 float: right; 
 filter: none;
 -webkit-filter: grayscale(0);
--webkit-transform: scale(1.01);
+background:red;
 }
 
 
@@ -608,7 +608,7 @@ filter: none;
 var time = new Date().getTime();
 
 
-var refreshTime = 2000;
+var refreshTime = 500;
 
 $(document).bind("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error hover change", function (e) {
     time = new Date().getTime();
@@ -639,11 +639,9 @@ setTimeout(refresh, refreshTime);
 
 </head>
 
-</head>
 
-<br><br>
 
-<body>
+<body oncontextmenu="return false;">
     
     
   <a href="javascript:close_window();" id="close_tab"><img src="/photos/close.png" id="img_close" title="close conversation"></a>
@@ -778,7 +776,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
  
  
             echo "<td id='td_default_mess'>
-                    <a href='chat2.php?both=$both'> Messenger </>
+                    <a href='chat2.php?both=$both'> Messenger Lite </>
                     <font color='white'> <hr id='hr'> </font> 
               </td>";
 
@@ -809,11 +807,23 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
  
           $to   =  $row['_to']; 
           
-          $message = wordwrap($row['message'], 50, "<br>", true);
+          $message = wordwrap($row['message'], 90, "<br>", true);
           $private_key_dec = $PRIVATE_KEY;
           $dec_text  = openssl_decrypt($message,"AES-256-CBC",$private_key_dec);
           $message = $dec_text;
 
+
+
+           //   $delete_one = "<form action='delete_chat_lite_one.php?both=$both&id=$id' method='get' style='float:right;'>
+           //               <button type='submit' name='delete_one'
+           //                style='background:none!important; border:none; padding:0!important; font-family:arial,sans-serif; color:#069; text-decoration:underline; cursor:pointer;'> 
+           //               <img src='photos/delete3.png' id='delete_one'>
+           //               </button>
+           //             </form> ";
+                        
+                        
+           $delete_one = "<a href='delete_chat_lite_one.php?both=$both&id=$id'> <img src='photos/delete3.png' id='delete_one'> </a>";
+            
 
 
              if ($row['_from'] == $_SESSION['login'])
@@ -822,7 +832,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
               if  ($message != null)
                    { 
                     $mes = "<td id='td_mess'>
-                    <font color='white'>  $avatar $date $time  <br> 
+                    <font color='white'>  $avatar $date $time $delete_one <br> 
                        $message </b> </font> 
               </td>";
                  }
@@ -859,7 +869,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
           
 
  echo  "<div align='center'>
-         <form action='delete_chat_messages.php?both=$both' method='post'/>
+         <form action='delete_chat_lite_messages.php?both=$both' method='post'/>
                 <input type='submit'  name='delete_submit' value='Delete Conversation &nbsp; &nbsp;' id='del'/> 
         </form>
          </div>";
@@ -869,11 +879,14 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
  echo "<div align='center'>
        <form action='' method='POST' class='form1' autocomplete='off'>
       <br><br>
-   <input class='chat' name='chat_text' maxlength='512' autofocus='autofocus' id='txt_1' required>
+   <input class='chat' name='chat_text' maxlength='60' autofocus='autofocus' id='txt_1' required>
     <br><br>
   <input type='hidden' name='chat_submit' value='Send' id='button'>
   </form>
  </div>";
+
+
+
 
 
 

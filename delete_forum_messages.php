@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Copyright (c) 2016-2019 Barchampas Gerasimos <http://chat.openloadlinks.com>
- * anon-chat-v2 is a program that allows anonymous conversations.
+ * Copyright (c) 2016-2020 Barchampas Gerasimos 
+ * anon-chat-v3 is a program that allows anonymous conversations.
  *
  * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -76,8 +76,10 @@ if(isset($_POST['delete_submit']))
         $result=$conn->query($sql);
 
 
+        echo ("<script>location.href='forum2.php?theme=$theme'</script>");
+        
 
-     echo ("<script>location.href='javascript:close_window();'</script>");
+   //  echo ("<script>location.href='javascript:close_window();'</script>");
 
    // header("Location: javascript:close_window();");
 

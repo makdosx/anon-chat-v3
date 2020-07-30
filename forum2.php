@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Copyright (c) 2016-2019 Barchampas Gerasimos <http://chat.openloadlinks.com>
- * anon-chat-v2 is a program that allows anonymous conversations.
+ * Copyright (c) 2016-2020 Barchampas Gerasimos 
+ * anon-chat-v3 is a program that allows anonymous conversations.
  *
  * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -210,7 +210,7 @@ width:55px;
 {
 position: fixed;
 top: 20%;
-left: 40%;
+left: 36%;
 margin-top: -50px;
 margin-left: -100px;
 
@@ -239,7 +239,7 @@ background-color:#4080FF;
 border-style:solid;
 border-width:0.3em; 
 border-color:#4080FF;
-border-radius: 25px;
+border-radius: 10px;
 }
 
 
@@ -253,7 +253,7 @@ background-color:#F1F0F0;
 border-style:solid;
 border-width:0.3em; 
 border-color:#F1F0F0;
-border-radius: 25px;
+border-radius: 10px;
 }
 
 
@@ -278,6 +278,27 @@ color: #f00;
 background-color: #f00;
 height: 5px;
 width: 500px;
+}
+
+
+
+#delete_one
+{
+height:20px;
+width: 20px;
+float: right; 
+filter: ; /* IE5+ */
+-webkit-filter: grayscale(100); /* Webkit Nightlies & Chrome Canary */
+-webkit-transition: all ease-in-out;  
+}
+
+
+#delete_one:hover
+{
+float: right; 
+filter: none;
+-webkit-filter: grayscale(0);
+background:red;
 }
 
 
@@ -349,7 +370,8 @@ setTimeout(refresh, refreshTime);
 
 
 
-<body>
+<body oncontextmenu="return false;">
+
 
 <br><br>
 
@@ -501,7 +523,9 @@ echo $conn->error;
            while ($row=$result->fetch_assoc())
                 {
  
-                 $date1=substr($row['created'],-11,3);
+                  $id = $row['id'];
+              
+                  $date1=substr($row['created'],-11,3);
                   $date2=substr($row['created'],-14,2);
                   $paula="/";
                   $date=$date1.$paula.$date2;
@@ -514,7 +538,7 @@ echo $conn->error;
                    
                   $from = $row['_from'];
                   
-                   $message = wordwrap($row['message'], 50, "<br>", true);
+                   $message = wordwrap($row['message'], 90, "<br>", true);
                    $private_key_dec = $PRIVATE_KEY;
                    $dec_text  = openssl_decrypt($message,"AES-256-CBC",$private_key_dec);
                    $message = $dec_text;
@@ -523,6 +547,11 @@ echo $conn->error;
 
                // for inside avatar in messages
                // <img src='/photos/favicon.ico' height='25'  width='25'>
+               
+               
+               
+          $delete_one = "<a href='delete_forum_one.php?theme=$theme&id=$id'> <img src='photos/delete3.png' id='delete_one'> </a>";
+
 
 
              if ($row['_from'] == $_SESSION['login'])
@@ -530,7 +559,7 @@ echo $conn->error;
                 $mes = "<td id='td_mess'>
                  <font color='white'> $avatar </font>
 				  <font color='orange'> <b> $from </b> </font> 
-				  <font color='white'> $date $time  <br>  $message </b> </font> 
+				  <font color='white'> $date $time $delete_one <br>  $message </b> </font> 
               </td>";
                  }
       
@@ -571,7 +600,7 @@ echo $conn->error;
  echo'<div align="center">
   <form action="" method="POST" id="form1">
       <br><br>
-   <input type="text"  class="chat" name="forum_text" maxlength="512" id="txt_1" autofocus="autofocus" required>
+   <input type="text"  class="chat" name="forum_text" maxlength="60" id="txt_1" autofocus="autofocus" required>
     <br><br>
   <input type="hidden" name="forum_submit" value="Send" id="button">
   </form>

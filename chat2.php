@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Copyright (c) 2016-2019 Barchampas Gerasimos <http://chat.openloadlinks.com>
- * anon-chat-v2 is a program that allows anonymous conversations.
+ * Copyright (c) 2016-2020 Barchampas Gerasimos 
+ * anon-chat-v3 is a program that allows anonymous conversations.
  *
  * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -61,7 +61,10 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 
 
+
+
 <style>
+
 
 body
 {
@@ -125,7 +128,7 @@ width:17em;
 {
 position:fixed;
 bottom:11%;
-right:40%;
+left:38%;
 width:20%;
 text-decoration:none;
 display:inline-block;
@@ -146,7 +149,7 @@ font-size:13px;
 {
 position:fixed;
 bottom:11%;
-right:40%;
+left:38%;
 width:20%;
 text-decoration:none;
 background-color:white;
@@ -167,7 +170,7 @@ font-size:13px;
 {
 position: fixed;
 top:1%;
-left:5%;
+left:3%;
 height:100%;
 width:90%;
 font-size:30px;
@@ -182,7 +185,7 @@ text-align:center;
 {
 position:fixed;
 top:1%;
-left:5%;
+left:3%;
 height:100%;
 width:90%;
 font-size:30px;
@@ -284,13 +287,11 @@ border-color:;
 border-collapse:separate; 
 border-spacing:1em;
 display: block;
-height: 65%;
+height: 62%;
 overflow-y: auto;
 width: 100%;
 text-align: center;
 font-size: 18px;
-
-
 
 }
 
@@ -311,6 +312,8 @@ border-width:0.3em;
 border-color:#4080FF;
 border-radius: 10px;
 width: 100%; 
+
+
 }
 
 
@@ -555,10 +558,10 @@ li {
 
 #delete_one
 {
-height:15px;
-width: 15px;
+height:20px;
+width: 20px;
 float: right; 
-filter: gray; /* IE5+ */
+filter: ; /* IE5+ */
 -webkit-filter: grayscale(100); /* Webkit Nightlies & Chrome Canary */
 -webkit-transition: all ease-in-out;  
 }
@@ -569,7 +572,7 @@ filter: gray; /* IE5+ */
 float: right; 
 filter: none;
 -webkit-filter: grayscale(0);
--webkit-transform: scale(1.01);
+background:red;
 }
 
 
@@ -670,23 +673,12 @@ setTimeout(refresh, refreshTime);
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
 </head>
 
 
-<br><br>
 
-<body>
-    
+<body oncontextmenu="return false;">
+
     
     <a href="javascript:close_window();" id="close_tab"><img src="/photos/close.png" id="img_close" title="close conversation"></a>
 
@@ -841,7 +833,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
 
   
             echo "<td id='td_default_mess'>
-                    <a href='chat_lite.php?both=$both'> Messenger Lite </>
+                    <a href='chat_lite.php?both=$both'> Messenger </>
                     <font color='white'> <hr id='hr'> </font> 
               </td>";
 
@@ -873,12 +865,23 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
  
           $to   =  $row['_to']; 
           
-          $message = wordwrap($row['message'], 50, "<br>", true);
+          
+          $message = $row['message'];
+
+         // $message = wordwrap($message, 50, "<br>", true);
+         
+         
+             $message = wordwrap($message, 88, "<br>", true);
+
+
+
+     
+
+          
           $private_key_dec = $PRIVATE_KEY;
           $dec_text  = openssl_decrypt($message,"AES-256-CBC",$private_key_dec);
           $message = $dec_text;
           
-
 
 
 
@@ -976,15 +979,17 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
                         </a>";
         
         
-          $delete_one = "<form action='' method='post' style='float:right;'>
-                          <button type='submit' name='delete_one' value='$id' 
-                           style='background:none!important; border:none; padding:0!important; font-family:arial,sans-serif; color:#069; text-decoration:underline; cursor:pointer;'>
-                          <img src='photos/delete2.png' id='delete_one'>
-                          </button>
-                        </form> ";
+          //$delete_one = "<form action='delete_chat_one.php?both=$both&id=$id' method='get' style='float:right;'>
+         //                 <button type='submit' name='delete_one'
+          //                 style='background:none!important; border:none; padding:0!important; font-family:arial,sans-serif; color:#069; text-decoration:underline; cursor:pointer;'> 
+          //                <img src='photos/delete3.png' id='delete_one'>
+          //                </button>
+          //              </form> ";
+          
 
+           $delete_one = "<a href='delete_chat_one.php?both=$both&id=$id'> <img src='photos/delete3.png' id='delete_one'> </a>";
 
-
+ 
              if ($row['_from'] == $_SESSION['login'])
                 {
                     
@@ -992,7 +997,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
                    { 
                     $mes = "<td id='td_mess'>
                     <font color='white'>  $avatar $date $time $delete_one <br> 
-                       $message </b> </font> 
+                       $message <br> </font> 
               </td>";
                  }
                 
@@ -1067,7 +1072,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
               if  ($message != null)
                    { 
                 $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time $delete_one <br>  $message </b> </font> 
+         <font color='black'> $avatar $date $time <br>  $message </b> </font> 
               </td>";
                  }
                 
@@ -1077,7 +1082,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time $delete_one  <br> <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time <br> <span class='glyphicon glyphicon-picture'></span> &nbsp; $photo_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1088,7 +1093,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='black'> $avatar $date $time $delete_one  <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time <br>  <span class='glyphicon glyphicon-volume-up'></span> &nbsp; $audio_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1100,7 +1105,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
             if  ($multimedia_size > 0)
                {
          $mes = "<td id='td_mess2'>
-         <font color='black'> $avatar $date $time $delete_one  <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time <br> <span class='glyphicon glyphicon-facetime-video'></span> &nbsp; $video_data_view2 </b> </font> 
               </td>";  
                 }
                }
@@ -1111,7 +1116,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='black'> $avatar $date $time $delete_one <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view2 </b> </font> 
+         <font color='black'> $avatar $date $time <br>  <span class='glyphicon glyphicon-file'></span> &nbsp; $pdf_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1123,7 +1128,7 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
              if  ($multimedia_size > 0)
                    { 
                 $mes = "<td id='td_mess'>
-         <font color='white'> $avatar $date $time $delete_one <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view2 </b> </font> 
+         <font color='white'> $avatar $date $time <br>  <span class='glyphicon glyphicon-text-size'></span> &nbsp; $text_data_view2 </b> </font> 
               </td>";
                    }
                 }
@@ -1135,6 +1140,8 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
 
 
         echo "<tr id ='tr_mess'> $mes </tr>";
+
+    
 
 
 
@@ -1158,7 +1165,7 @@ echo'
  <div align="center">
   <form action="" method="POST" class="form1" autocomplete="off">
       <br><br>
-   <input class="chat" name="chat_text" maxlength="512" autofocus="autofocus" id="txt_1" required>
+   <input class="chat" name="chat_text" maxlength="60" autofocus="autofocus" id="txt_1" required>
     <br><br>
   <input type="hidden" name="chat_submit" value="Send" id="button">
   </form>
@@ -1283,17 +1290,6 @@ $("#txt_1").keypress(function (e) {
 */
 
 
-
-
-  if (isset($_POST['delete_one']))
-     {
-         
-        $id_delete = $_POST['delete_one']; 
-         
-        $sql="DELETE FROM chat WHERE id='$id_delete' and message !='request_conversation'";
-        $result=$conn->query($sql);
-             
-     }
 
 
 

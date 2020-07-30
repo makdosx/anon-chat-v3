@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Copyright (c) 2016-2019 Barchampas Gerasimos <http://chat.openloadlinks.com>
- * anon-chat-v2 is a program that allows anonymous conversations.
+ * Copyright (c) 2016-2020 Barchampas Gerasimos 
+ * anon-chat-v3 is a program that allows anonymous conversations.
  *
  * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -72,13 +72,16 @@ if(isset($_POST['delete_submit']))
 
 
 
-        $sql="DELETE FROM chat WHERE _from='".$_SESSION['login']."' and request_both='$both' and message !='request_conversation'";
+        $sql="DELETE FROM chat WHERE _from='".$_SESSION['login']."'  and request_both='$both' and message !='request_conversation'";
         $result=$conn->query($sql);
 
 
+     
 
-     echo ("<script>location.href='javascript:close_window();'</script>");
+      echo ("<script>location.href='chat2.php?both=$both'</script>");
 
+     //echo ("<script>location.href='javascript:close_window();'</script>");
+     
    // header("Location: javascript:close_window();");
 
  echo'<script>

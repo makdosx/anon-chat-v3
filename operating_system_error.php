@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Copyright (c) 2016-2019 Barchampas Gerasimos <http://chat.openloadlinks.com>
- * anon-chat-v2 is a program that allows anonymous conversations.
+ * Copyright (c) 2016-2020 Barchampas Gerasimos 
+ * anon-chat-v3 is a program that allows anonymous conversations.
  *
  * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,6 +20,7 @@
  *
  */
 
+
 ?>
 
 
@@ -27,7 +28,7 @@
 <head>
 </head>
 
-<body bgcolor="#0000FF">
+<body bgcolor="#0000FF" oncontextmenu="return false;">
 
 </body>
 </html>

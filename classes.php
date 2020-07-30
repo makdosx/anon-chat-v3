@@ -1,15 +1,16 @@
 <?php
+
 /*
- * Copyright (c) 2017-2018 Barchampas Gerasimos <makindosx@gmail.com>
- * QR-sms is a sms getaway with qrcode for verification (etc).
+ * Copyright (c) 2016-2020 Barchampas Gerasimos 
+ * anon-chat-v3 is a program that allows anonymous conversations.
  *
- * QR-sms is free software: you can redistribute it and/or modify
+ * anon-chat-v2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
  *
- * QR-sms is distributed in the hope that it will be useful,
+ * anon-chat-v2 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
@@ -18,6 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
  */
+ 
+ 
   class data
     {
     public $connect = array();

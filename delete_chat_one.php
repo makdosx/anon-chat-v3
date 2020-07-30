@@ -21,7 +21,6 @@
  */
 
 
-
 session_start();
 
 
@@ -30,11 +29,16 @@ session_start();
      header('Location:index.php');
      }
 
-
-
   
   else
     {
+
+
+
+    $both = $_GET['both'];
+    $id_delete = $_GET['id']; 
+    
+
 
   require ('class_connect.php'); 
 
@@ -57,67 +61,50 @@ session_start();
 
 
 
+   else
+     {
+   
+       $ip_addr = $_SERVER['REMOTE_ADDR'];
+       $path = $_SERVER['REQUEST_URI'];
+
+
+    $sql2="insert log_file (username,ip_addr,path,connect) values('".$_SESSION['login']."','$ip_addr','$path',NOW())";
+    $result2=$conn->query($sql2);  
+
+         
+        $sql="DELETE FROM chat WHERE id='$id_delete' and request_both='$both' and message !='request_conversation' and _from = '".$_SESSION['login']."'";
+        $result=$conn->query($sql);
+             
+    
+
+     
+      echo ("<script>location.href='chat2.php?both=$both'</script>");
+      
+
+     //echo ("<script>location.href='javascript:close_window();'</script>");
+     
+   // header("Location: javascript:close_window();");
+
+ echo'<script>
+    function close_window() 
+      {
+    close();
+     }
+ </script>';
+
+
+
+   } // end of else connect
  
 
-    else
-     { 
-
-    
-  if(isset($_GET['theme']))
-    {
-
-     $theme = $_GET['theme'];
-
-     $creator = $_SESSION['login'];  
-     
-     
-     $sql = "select theme, creator from forum where theme = '$theme' and creator = '$creator'";
-     $result = $conn->query($sql);
-       
-     $count = $result -> num_rows;
-     
-       
-   if ($count > 0 ) 
-      {
-     
-   $sql2="DELETE FROM forum where theme = '$theme' and creator = '$creator'";
-   $result2=$conn->query($sql2);
-   $rows2 = $result2->num_rows;
-   
-
-      echo '<script type="text/javascript">alert("Delete theme sucessfuly");
-         </script>';
-          echo ("<script>location.href='forum.php'</script>");
-
-        } // end of if true
-
-
-   else 
-     {
-   echo '<script type="text/javascript">alert("You can not delete this theme because you are not the creator");
-         </script>';
-        echo ("<script>location.href='forum.php'</script>");
-      }
-
-
-
-
-
-   
-   
-      } // end if theme
-
-
-
-     }// end of else connect
-
-
-
-
-   } // end of else session
+   $conn->close();
 
   
+
+ 
+
+  }// end of else session
+
+
+
 ?>
-
-
-
