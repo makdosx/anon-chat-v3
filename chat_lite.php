@@ -571,6 +571,14 @@ background:red;
 }
 
 
+#view_con
+{
+float: left; 
+font-size: 15px;
+color: black;
+}
+
+
 </style>
 
 
@@ -826,13 +834,27 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
             
 
 
+             $view_con = $row['view'];
+               
+                   if ($view_con == 'yes')
+                       {
+                     $view_con ="<span id='view_con'> Read </span>";   
+                       }
+                       
+                      else
+                       {
+                        $view_con ='';  
+                       }
+                  
+                  
+
              if ($row['_from'] == $_SESSION['login'])
                 {
                     
               if  ($message != null)
                    { 
                     $mes = "<td id='td_mess'>
-                    <font color='white'>  $avatar $date $time $delete_one <br> 
+                    <font color='white'>  $avatar $date $time $delete_one $view_con <br> 
                        $message </b> </font> 
               </td>";
                  }
@@ -863,7 +885,16 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
         echo "<tr id ='tr_mess'> $mes </tr> ";
 
 
+            $date_now = date("Y-m-d H:i:s"); 
+
+                 $sql_view="update chat set view='yes'
+                     where _from = '$from' and view_to='".$_SESSION['login']."' and created<'$date_now'";
+                 $result_view=$conn->query($sql_view);
+
+
             } // end of while chat
+            
+
 
     echo '</table> </div> </div>';
           
@@ -933,8 +964,8 @@ and message!='request_conversation' and created >= CURRENT_TIMESTAMP - INTERVAL 
    $encrypted_text  = openssl_encrypt($enc_text,"AES-256-CBC",$private_key_enc);
    
 
- $sql2="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint) 
-         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$encrypted_text',NOW(),'request$i','$both','request$i','$finger')";
+ $sql2="INSERT INTO chat (id2,_from,ip_from,_to,message,created,request,request_both,request_time,fingerprint, view_to, view) 
+         VALUES ('$id2', '{$_SESSION['login']}','$ip_from','chat','$encrypted_text',NOW(),'request$i','$both','request$i','$finger', '$both_to', 'no')";
   $result2=$conn->query($sql2);
 
 

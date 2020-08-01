@@ -58,7 +58,7 @@ table
 background-color:;
 opacity:1;
 border-collapse:separate; 
-border-spacing:7px;; 
+border-spacing:7px; 
 }
 
 
@@ -66,8 +66,7 @@ border-spacing:7px;;
 
 td
 {
-width:2em;
-color:yellow;
+width:0.5em;
 text-align:center;
 }
 
@@ -192,6 +191,10 @@ cursor:pointer;
 
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
  require('class_connect.php');
 
@@ -213,10 +216,11 @@ cursor:pointer;
 
  else
   {
-      
   
-    $sql="select username, is_inside from users_online where username != 'default' and username!='".$_SESSION['login']."' order by username asc";
-    $result=$conn->query($sql);
+        
+ 
+  
+   
 
 
        $ip_addr = $_SERVER['REMOTE_ADDR'];
@@ -234,6 +238,9 @@ cursor:pointer;
            <div id='reload1'>";
 
 
+   $sql="select username, is_inside from users_online where username != 'default' and username!='".$_SESSION['login']."' order by username asc";
+    $result=$conn->query($sql);
+
      while ($row=$result->fetch_assoc())
       {
           
@@ -243,16 +250,19 @@ cursor:pointer;
       
       $avatar_user = $username."."."png"; 
       $avatar = "<img id='avatar' src='/avatars/$avatar_user'>";
-    
       
-    if($is_inside == 'yes')
-      {
-          
+      
+    
+      $sql0="select _from, count(message), count(multimedia_name) from chat where view_to = '".$_SESSION['login']."' 
+            and view='no' and message!='request_conversation' group by _from";
+     $result0=$conn->query($sql0);
+ 
+      
    echo "<table>
          <tr>
 
        <td> 
-         $avatar
+         $avatar 
         </td>
 
         <td>  
@@ -261,10 +271,60 @@ cursor:pointer;
           <input type='submit' name='user_online' class='butt' value='$username'> 
          </form>
         </font>
-         </td>
+         </td>";
+         
+         
+         
+         while ($row0=$result0->fetch_assoc())
+         {
+         // $unread_messages = $row0['count(messages)'];
+         // $unread_multimedia = $row0['count(multimedia_name)'];
+         // $unread_all = $unread_messages + $unread_multimedia;
+           $unread_mes = $row0['count(message)'];
+           $_from = $row0['_from'];
+           //echo $_from ."-" .$unread_mes;
+         
+         
+         if ($username == $_from)
+            {
+             $unread_from = $unread_mes;     
+           }
+             
+             
+            else
+              {
+              $unread_from ='';
+              }
+         
+        
+        echo"   
            
+           <td>
+             <font color='red'> <b> $unread_from </bold> </font>
+           </td>
+           <td>
+            
+           </td>";
+       
+           
+           
+         } // end while from unread messages from users
+
+
+      
+    if($is_inside == 'yes')
+      {
+        $img = '<img src=/photos/online.png height=10 width=12>';
+       }
+       
+     if($is_inside == 'no')
+      {
+        $img = '<img src=/photos/offlinee.png height=10 width=12>';
+       }
+
+    echo"       
         <td>
-       <img src=/photos/online.png height=10 width=12>
+         $img 
         </td>
 
          </tr>
@@ -273,48 +333,17 @@ cursor:pointer;
          
      </table>";
 
-    } // end of if yes
-//exit;
-
- 
+   
 
 
 
 
- if($is_inside == 'no')
-      {
-          
-    echo "<table>
-         <tr>
 
-        <td> 
-         $avatar
-        </td>
 
-       <td>  
-        <font size='3' color='black'> 
-         <form action='' method='post'> <br>
-          <input type='submit' name='user_offline' class='butt' value='$username'> 
-         </form>
-        </font>
-         </td>
-           
-        <td>
-       <img src=/photos/ofline.png height=10 width=12>
-        </td>
-
-         </tr>
-         
-         <tr> <td> &nbsp; </td> </tr>
-         
-        </table>";
+} // end of while for is inside
 
 
 
-     } // enf of if no
-
- 
-} // end of while
 
 
   echo "</div> </div>";
