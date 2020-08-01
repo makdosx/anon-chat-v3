@@ -1,8 +1,8 @@
 
-# anon-chat-v2
-anon-chat-v2 is a program that allows anonymous conversations.
+# anon-chat-v3
+anon-chat-v3 is a program that allows anonymous conversations.
 
-Use anon-chat-v2 from here: http://chat.openloadlinks.com
+Use anon-chat-v3 from here: http://anon.www1.gr/
 
 Operation of the program.
 Complete anonymous use of a two-fold joint connection, creating each time a random key of multidimensional fingerprinting of a 32-character alphanumeric character that changes with each new beginning of the conference.
